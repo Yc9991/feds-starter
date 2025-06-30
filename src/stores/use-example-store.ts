@@ -8,7 +8,6 @@ export const useExampleStore = defineStore('use-example-store', () => {
     const data = ref<DataSource | null>()
     const refDatagridExample = ref<DxDataGrid | null>(null)
 
-
     let fetchGet = async () => {
         const { dataSource } = await useMyFetchOData<ExampleTypes[]>({
             url: '/Customers',

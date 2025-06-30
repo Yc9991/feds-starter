@@ -1,3 +1,3 @@
 <template>
-    <FederationExample />
+   Halaman depan
 </template>

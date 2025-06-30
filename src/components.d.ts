@@ -8,8 +8,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    FederationExample: typeof import('./components/Federation/Example.vue')['default']
+    FederationContoh: typeof import('./components/Federation/Contoh.vue')['default']
+    'FederationContohCatatan-': typeof import('./components/Federation/Contoh-Catatan-.vue')['default']
+    'FederationContohCatatanLagi-': typeof import('./components/Federation/Contoh-Catatan-Lagi-.vue')['default']
+    FederationContohCatatanUnit: typeof import('./components/Federation/Contoh-Catatan-Unit.vue')['default']
+    FederationContohUnit: typeof import('./components/Federation/ContohUnit.vue')['default']
     FederationLoad: typeof import('./components/Federation/Load.vue')['default']
+    FederationTable: typeof import('./components/Federation/Table.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
