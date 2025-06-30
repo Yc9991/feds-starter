@@ -5,9 +5,8 @@ import 'virtual:uno.css'
 import { createPinia } from 'pinia'
 import router from './router'
 
-const pinia = createPinia()
 //@ts-ignore
-window.pinia = pinia
+const pinia = window.pinia ?? createPinia()
 
 const app = createApp(App)
 
