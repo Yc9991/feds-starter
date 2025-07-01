@@ -9,9 +9,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     FederationContoh: typeof import('./components/Federation/Contoh.vue')['default']
-    'FederationContohCatatan-': typeof import('./components/Federation/Contoh-Catatan-.vue')['default']
-    'FederationContohCatatanLagi-': typeof import('./components/Federation/Contoh-Catatan-Lagi-.vue')['default']
-    FederationContohCatatanUnit: typeof import('./components/Federation/Contoh-Catatan-Unit.vue')['default']
+    FederationContohCatatan_: typeof import('./components/Federation/ContohCatatan_.vue')['default']
+    FederationContohCatatan_Lagi_: typeof import('./components/Federation/ContohCatatan_Lagi_.vue')['default']
+    FederationContohCatatan_Unit: typeof import('./components/Federation/ContohCatatan_Unit.vue')['default']
     FederationContohUnit: typeof import('./components/Federation/ContohUnit.vue')['default']
     FederationLoad: typeof import('./components/Federation/Load.vue')['default']
     FederationTable: typeof import('./components/Federation/Table.vue')['default']

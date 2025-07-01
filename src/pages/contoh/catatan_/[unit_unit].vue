@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FederationContohCatatanUnit from '@/components/Federation/Contoh-Catatan-Unit.vue'
+import FederationContohCatatanUnit from '@/components/Federation/ContohCatatan_Unit.vue'
 
 </script>
 

@@ -147,10 +147,10 @@ Terdapat 4 pattern remote yang bisa digunakan:
 
 List diatas dapat dibaca: komponen yang dibuat dalam folder [/src/components/Federation](../main/src/components/Federation) otomatis akan manjadi url pada contoh di sampingnya pada proses Build. Prefix `Unit` di akhir artinya menandakan halaman dinamis yang bisa diisi apa saja, misal ID.
 
-Terdapat kondisi khusus, jika url `/contoh/88` memiliki halaman custom lain seperti `/contoh/catatan` (bukan url dinamis), maka ditulis:
- 1. Komponen `Contoh-Catatan-.vue` -> `/contoh/catatan`
- 2. Komponen `Contoh-Catatan-Unit.vue` -> `/contoh/catatan/88`
- 3. Komponen `Contoh-Catatan-Lagi-.vue` -> `/contoh/catatan/lagi`
+Terdapat kondisi khusus, jika url `/contoh/88` memiliki halaman custom lain seperti `/contoh/catatan` (bukan url dinamis), maka harus ditambahkan `_` di ujung file ditulis:
+ 1. Komponen `ContohCatatan_.vue` -> `/contoh/catatan_`
+ 2. Komponen `ContohCatatan-Unit.vue` -> `/contoh/catatan_/88`
+ 3. Komponen `Contoh-Catatan_Lagi_.vue` -> `/contoh/catatan_/lagi_`
 
 ### Proses Development Federasi
 Untuk menyesuaikan route halaman, proses development disarankan menginject juga komponen federasi pada folder [/src/pages](../main/src/pages).
@@ -158,8 +158,8 @@ Untuk menyesuaikan route halaman, proses development disarankan menginject juga 
 Jika menyesuaikan dengan pattern federasi sebelumnya file yang dapat dibuat dibuat seperti:
  1. Page `contoh.vue` -> `/contoh`
  2. Page `contoh/[unit].vue` -> `/contoh/88`
- 3. Page `contoh/-catatan-.vue` -> `/contoh/-catatan-`
- 4. Page `contoh/-catatan-/[unit_unit].vue` -> `/contoh/-catatan-/77`
- 5. Page `contoh/-catatan-/-lagi-.vue` -> `/contoh/-catatan-/-lagi-`
+ 3. Page `contoh/catatan_.vue` -> `/contoh/catatan_`
+ 4. Page `contoh/catatan_/[unit_unit].vue` -> `/contoh/catatan_/77`
+ 5. Page `contoh/catatan_/lagi_.vue` -> `/contoh/catatan_/lagi_`
 
-Penulisan pages juga dapat menggabungkan folder dan file. Misal folder `contoh` memiliki file `index.vue` maka sama saja dengan url `/contoh`. atau folder `contoh` memiliki file `[unit].unit` dapat menjadi url `/contoh/88`.
+Penulisan pages juga dapat menggabungkan folder dan file. Misal folder `contoh` memiliki file `index.vue` maka sama saja dengan url `/contoh`. atau folder `contoh` memiliki file `[unit].vue` dapat menjadi url dinamis `/contoh/88`.
