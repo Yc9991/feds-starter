@@ -1,4 +1,4 @@
-# Tantang
+# Tentang
 Proyek website SPA yang, menggunakan [Vue 3](https://github.com/vuejs/core) sebagai front-end Javascript dan [UnoCss](https://github.com/unocss/unocss).
 
 ## Setup
