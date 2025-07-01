@@ -149,8 +149,8 @@ List diatas dapat dibaca: komponen yang dibuat dalam folder [/src/components/Fed
 
 Terdapat kondisi khusus, jika url `/contoh/88` memiliki halaman custom lain seperti `/contoh/catatan` (bukan url dinamis), maka harus ditambahkan `_` di ujung file ditulis:
  1. Komponen `ContohCatatan_.vue` -> `/contoh/catatan_`
- 2. Komponen `ContohCatatan-Unit.vue` -> `/contoh/catatan_/88`
- 3. Komponen `Contoh-Catatan_Lagi_.vue` -> `/contoh/catatan_/lagi_`
+ 2. Komponen `ContohCatatan_Unit.vue` -> `/contoh/catatan_/88`
+ 3. Komponen `ContohCatatan_Lagi_.vue` -> `/contoh/catatan_/lagi_`
 
 ### Proses Development Federasi
 Untuk menyesuaikan route halaman, proses development disarankan menginject juga komponen federasi pada folder [/src/pages](../main/src/pages).
