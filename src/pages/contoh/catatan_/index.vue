@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import FederationContohCatatan from '@/components/Federation/ContohCatatan_.vue'
 
+const route = useRoute();
 </script>
-
 <template>
-    <FederationContohCatatan />
+    <div>
+        Di sini halaman {{ route.path }}
+    </div>
 </template>

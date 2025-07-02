@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import FederationContoh from '@/components/Federation/Contoh.vue'
+
+const route = useRoute();
 </script>
-
-
 <template>
-    <FederationContoh />
+    <div>
+        Di sini halaman {{ route.path }}
+    </div>
 </template>

@@ -38,10 +38,11 @@ export default defineConfig({
     }
   },
   plugins: [
-
     vue(),
     UnoCSS(),
+    //@ts-ignore
     Pages(),
+    //@ts-ignore
     process.env.VITE_HTTPS == 'true' && mkcert({
       force: true,
       savePath: './cert'

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import FederationContohCatatanUnit from '@/components/Federation/ContohCatatan_Unit.vue'
+
+const route = useRoute()
 
 </script>
-
-
 <template>
-    <FederationContohCatatanUnit />
+    <div>
+        Di sini halaman {{ route.path }} unit {{ route.params.unit_unit }}
+    </div>
 </template>

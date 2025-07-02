@@ -139,27 +139,15 @@ Pengembang merekomendasikan menggunakan ektensi berikut pada masa develpment. Da
 ## Federasi
 Federasi adalah konsep menggabungkan dua website berbeda menjadi satu. Terdapat dua tipe federasi yaitu `Host` yang berfungsi sebagai kerangka website utama, dan `Remote` yang dapat diinject ke dalam `Host`. Misal dalam `Host` dapat memiliki banyak `Remote`. Repo ini sendiri merupakan starter minimal untuk `Remote`.
 
-Untuk mendefinisikan halaman mana saja yang akan diinject ke dalam `Host`, kita dapat membuat file vue di folder [/src/components/Federation](../main/src/components/Federation)
+Untuk membuat halaman federasi `Remote` pada repo ini, cukup membuat routing pada halaman  [/src/pages](../main/src/pages)
 
-Terdapat 4 pattern remote yang bisa digunakan:
- 1. Komponen `Contoh.vue` -> `/contoh`
- 2. Komponen `ContohUnit.vue` -> `/contoh/88`
-
-List diatas dapat dibaca: komponen yang dibuat dalam folder [/src/components/Federation](../main/src/components/Federation) otomatis akan manjadi url pada contoh di sampingnya pada proses Build. Prefix `Unit` di akhir artinya menandakan halaman dinamis yang bisa diisi apa saja, misal ID.
-
-Terdapat kondisi khusus, jika url `/contoh/88` memiliki halaman custom lain seperti `/contoh/catatan` (bukan url dinamis), maka harus ditambahkan `_` di ujung file ditulis:
- 1. Komponen `ContohCatatan_.vue` -> `/contoh/catatan_`
- 2. Komponen `ContohCatatan_Unit.vue` -> `/contoh/catatan_/88`
- 3. Komponen `ContohCatatan_Lagi_.vue` -> `/contoh/catatan_/lagi_`
-
-### Proses Development Federasi
-Untuk menyesuaikan route halaman, proses development disarankan menginject juga komponen federasi pada folder [/src/pages](../main/src/pages).
-
-Jika menyesuaikan dengan pattern federasi sebelumnya file yang dapat dibuat dibuat seperti:
+Misal pada `Remote` ini kita membuat banyak halaman:
  1. Page `contoh.vue` -> `/contoh`
  2. Page `contoh/[unit].vue` -> `/contoh/88`
- 3. Page `contoh/catatan_.vue` -> `/contoh/catatan_`
- 4. Page `contoh/catatan_/[unit_unit].vue` -> `/contoh/catatan_/77`
- 5. Page `contoh/catatan_/lagi_.vue` -> `/contoh/catatan_/lagi_`
 
-Penulisan pages juga dapat menggabungkan folder dan file. Misal folder `contoh` memiliki file `index.vue` maka sama saja dengan url `/contoh`. atau folder `contoh` memiliki file `[unit].vue` dapat menjadi url dinamis `/contoh/88`.
+Terdapat kondisi khusus, jika url `/contoh/88` memiliki halaman custom lain seperti `/contoh/catatan` (yang setingkat dan bukan routing dinamis), maka harus ditambahkan `_` di ujung file ditulis:
+ 1. Page `contoh/catatan_.vue` -> `/contoh/catatan_`
+ 2. Page `contoh/catatan_/[unit_unit].vue` -> `/contoh/catatan_/77`
+ 3. Page `contoh/catatan_/lagi_.vue` -> `/contoh/catatan_/new_`
+
+List diatas dapat dibaca: Jika kita membuat file `contoh.vue` maka akan menjadi halaman federasi `/contoh`, yang dapat diinject ke dalam `Host`. Perlu diperhatikan, terdapat banyak `Remote` tapi url federasi yang dihasilkan harus unik untuk setiap `Remote`. Misal jika `Remote` 1 sudah mendefinisikan url `/contoh` maka, `Remote` 2 tidak bisa mendefinisikan url yang sama.
