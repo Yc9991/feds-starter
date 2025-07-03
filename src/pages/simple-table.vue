@@ -30,7 +30,7 @@ const bioStore = useBioStore()
         </tbody>
     </table>
 
-    <ModalPopup :fullScreen="true" title="Edit Bio" v-model:open="bioStore.openModal">
+    <ModalPopup  title="Edit Bio" v-model:open="bioStore.openModal">
         <template #desc>
             <p class="text-red">
                 {{ bioStore.currentData }}

@@ -9,5 +9,4 @@ export const useModalStore = defineStore('use-modal-store', () => {
         open,
         title
     }
-
 })

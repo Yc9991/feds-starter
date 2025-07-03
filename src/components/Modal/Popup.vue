@@ -18,12 +18,12 @@ const open = defineModel('open')
     <div class="p-6">
         <div v-show="open" class=" fixed inset-0 z-50  w-full inset-0 ">
 
-            <div :class="fullScreen ? '' : 'md:py-12'" class="relative w-full mx-auto h-full flex items-start justify-center ">
+            <div :class="fullScreen ? '' : 'py-12'" class="relative w-full mx-auto h-full flex items-start justify-center ">
                 <div class="absolute bg-black/30 inset-0">
 
                 </div>
                 <div
-                :class="fullScreen ? 'w-full h-full': 'lg:w-90 lg:h-90 md:w-80 md:h-auto'"
+                :class="fullScreen ? 'w-full h-full lg:w-90 lg:h-auto md:w-80 md:h-auto': 'lg:w-90 lg:h-auto w-80 h-auto'"
 
                     class="relative bg-white rounded-lg shadow-md border border-gray-200 ">
                     <div class="flex items-center justify-between p-3  border-b rounded-t border-gray-200">
