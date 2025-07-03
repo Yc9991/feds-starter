@@ -62,9 +62,7 @@ export default defineConfig({
       vueTemplate: true,
     }),
     federationAutoExpose({
-      name: 'example',
-      filename: 'remoteEntry.js',
-      shared: ['vue', 'vue-router', 'pinia', '@vueuse/core']
+      name: 'feds-starter',
     }),
     Components({
       extensions: ['vue'],

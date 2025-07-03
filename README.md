@@ -1,14 +1,24 @@
 # Tentang
 Proyek website SPA yang, menggunakan [Vue 3](https://github.com/vuejs/core) sebagai front-end Javascript dan [UnoCss](https://github.com/unocss/unocss).
 
-## Setup
+
+### Daftar Konten
+- [Setup](#setup)
+- [Env](#env)
+- [Vue](#vue)
+- [Folder](#folder)
+- [Ekstensi](#ekstensi)
+- [Federasi](#federasi)
+---
+
+## <a name="setup">Setup</a>
 Untuk menginstall semua dependencies, gunakan pnpm, dengan menjalankan fungsi:
 
 ```bash
 pnpm i
 ```
 
-## Env
+## <a name="env">Env</a>
 Untuk men-setup variabel `.env`  (jika belum ada), rename file bernama `.env.example` menjadi `.env` masukkan data berikut ke dalamnya, dan isi valuenya. `.env` digunakan untuk men-deploy, sedangkan `.env.dev` untuk pengembangan.
 
 ```bash
@@ -19,12 +29,12 @@ VITE_ODATA_API_BASE_URL=""
 VITE_HTTPS="false"
 ```
 
-## Vue
+## <a name="vue">Vue</a>
 Penulisan kode sepenuhnya dilakukan dengan composition api milik Vue 3, dengan membungkus script bersama setup `<script setup>`, cek lebih jelasnya tantang [script setup](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup).
 
 Vue digunakan bersama Typescript, setiap data memiliki definisi type masing-masing, disarankan untuk memberikan definisi tipe jika ingin membuat data baru.
 
-## Folder
+## <a name="folder">Folder</a>
 <ol>
     <li>
         <a href="../main/public">/public</a>
@@ -80,7 +90,7 @@ Vue digunakan bersama Typescript, setiap data memiliki definisi type masing-masi
     </li>
 </ol>
 
-## Ekstensi Kode Editor
+## <a name="ekstensi">Ekstensi</a>
 Pengembang merekomendasikan menggunakan ektensi berikut pada masa develpment. Dapat dicari dan diinstall langsung menggunakan kode editor [VSCode](https://code.visualstudio.com)
 <ol>
     <li>
@@ -136,10 +146,32 @@ Pengembang merekomendasikan menggunakan ektensi berikut pada masa develpment. Da
     
 </ol>
 
-## Federasi
+## <a name="federasi">Federasi</a>
 Federasi adalah konsep menggabungkan dua website berbeda menjadi satu. Terdapat dua tipe federasi yaitu `Host` yang berfungsi sebagai kerangka website utama, dan `Remote` yang dapat diinject ke dalam `Host`. Misal dalam `Host` dapat memiliki banyak `Remote`. Repo ini sendiri merupakan starter minimal untuk `Remote`.
 
-Untuk membuat halaman federasi `Remote` pada repo ini, cukup membuat routing pada halaman  [/src/pages](../main/src/pages)
+Untuk membuat halaman federasi `Remote` pada repo ini, cukup membuat routing pada halaman  [/src/pages](../main/src/pages). Prosesnya memerlukan setup pada [vite.config.ts](../main/vite.config.ts) dengan menambahkan:
+
+```ts
+import { defineConfig } from 'vite'
+//sumber custom plugin
+import { federationAutoExpose } from './src/plugins/federation-auto-expose'
+
+export default defineConfig({
+  plugins: [
+     //custom plugin federasi
+    federationAutoExpose({
+        //nama aplikasi federasi (bebas)
+      name: 'feds-starter',
+    }),
+  ],
+  //build config yang support untuk federasi
+  build: {
+    minify: true,
+    target: ["chrome89", "edge89", "firefox89", "safari15"],
+  },
+})
+
+```
 
 Misal pada `Remote` ini kita membuat banyak halaman:
  1. Page `contoh.vue` -> `/contoh`
