@@ -15,7 +15,11 @@ declare module 'vue' {
     FederationContohUnit: typeof import('./components/Federation/ContohUnit.vue')['default']
     FederationLoad: typeof import('./components/Federation/Load.vue')['default']
     FederationTable: typeof import('./components/Federation/Table.vue')['default']
+    Modal: typeof import('./components/Modal/Modal.vue')['default']
+    ModalPopup: typeof import('./components/Modal/Popup.vue')['default']
+    Popup: typeof import('./components/Popup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Text: typeof import('./components/Text.vue')['default']
   }
 }
