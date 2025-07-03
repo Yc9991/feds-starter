@@ -143,11 +143,16 @@ Untuk membuat halaman federasi `Remote` pada repo ini, cukup membuat routing pad
 
 Misal pada `Remote` ini kita membuat banyak halaman:
  1. Page `contoh.vue` -> `/contoh`
- 2. Page `contoh/[unit].vue` -> `/contoh/88`
+ 2. Page `contoh/[unit].vue` -> `/contoh/88` (dinamis)
 
 Terdapat kondisi khusus, jika url `/contoh/88` memiliki halaman custom lain seperti `/contoh/catatan` (yang setingkat dan bukan routing dinamis), maka harus ditambahkan `_` di ujung file ditulis:
  1. Page `contoh/catatan_.vue` -> `/contoh/catatan_`
  2. Page `contoh/catatan_/[unit_unit].vue` -> `/contoh/catatan_/77`
  3. Page `contoh/catatan_/lagi_.vue` -> `/contoh/catatan_/new_`
 
+
 List diatas dapat dibaca: Jika kita membuat file `contoh.vue` maka akan menjadi halaman federasi `/contoh`, yang dapat diinject ke dalam `Host`. Perlu diperhatikan, terdapat banyak `Remote` tapi url federasi yang dihasilkan harus unik untuk setiap `Remote`. Misal jika `Remote` 1 sudah mendefinisikan url `/contoh` maka, `Remote` 2 tidak bisa mendefinisikan url yang sama.
+
+> [!NOTE]
+> Url dinamis yang tersedia hanya `unit` dan `unit_unit`. Dan Url federasi maximal hanya mencapai 3 tingkat: `url1/url2/url3`
+
