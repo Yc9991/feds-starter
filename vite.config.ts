@@ -64,7 +64,6 @@ export default defineConfig({
     federationAutoExpose({
       name: 'feds-starter',
       include: ['/contoh/**'],
-      exclude: ['/contoh/[unit].vue']
     }),
     Components({
       extensions: ['vue'],
