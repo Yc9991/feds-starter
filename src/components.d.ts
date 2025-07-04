@@ -8,16 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    FederationContoh: typeof import('./components/Federation/Contoh.vue')['default']
-    FederationContohCatatan_: typeof import('./components/Federation/ContohCatatan_.vue')['default']
-    FederationContohCatatan_Lagi_: typeof import('./components/Federation/ContohCatatan_Lagi_.vue')['default']
-    FederationContohCatatan_Unit: typeof import('./components/Federation/ContohCatatan_Unit.vue')['default']
-    FederationContohUnit: typeof import('./components/Federation/ContohUnit.vue')['default']
-    FederationLoad: typeof import('./components/Federation/Load.vue')['default']
-    FederationTable: typeof import('./components/Federation/Table.vue')['default']
-    Modal: typeof import('./components/Modal/Modal.vue')['default']
     ModalPopup: typeof import('./components/Modal/Popup.vue')['default']
-    Popup: typeof import('./components/Popup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Text: typeof import('./components/Text.vue')['default']

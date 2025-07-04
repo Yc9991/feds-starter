@@ -33,6 +33,6 @@ function ubahBinding() {
 
         <input type="text" :class="typeInput" class="border" v-model="modalStore.title">
 
-        <RouterLink to="/example/menu">Pindah halaman</RouterLink>
+        <RouterLink to="/guide/example/menu">Pindah halaman</RouterLink>
     </div>
 </template>
