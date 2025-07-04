@@ -161,7 +161,9 @@ export default defineConfig({
      //custom plugin federasi
     federationAutoExpose({
         //nama aplikasi federasi (bebas)
-      name: 'feds-starter',
+        name: 'feds-starter',
+        //file apa saja yang ingin di include di folder /src/pages
+        include: ['/contoh/**'],
     }),
   ],
   //build config yang support untuk federasi
