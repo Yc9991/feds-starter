@@ -11,6 +11,8 @@ declare module 'vue' {
     ModalPopup: typeof import('./components/Modal/Popup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TableCustomRow: typeof import('./components/Table/ExpandDetail.vue')['default']
+    TableExpandDetail: typeof import('./components/Table/ExpandDetail.vue')['default']
     Text: typeof import('./components/Text.vue')['default']
   }
 }

@@ -6,7 +6,7 @@ const example: DataGrid = {
     allowColumnResizing: true,
     allowColumnReordering: true,
     rowAlternationEnabled: true,
-    showBorders: false,
+    showBorders: true,
     columnAutoWidth: true,
     wordWrapEnabled: true,
     class: "!h-[75vh]",
@@ -14,8 +14,20 @@ const example: DataGrid = {
     columnResizingMode: 'widget'
 }
 
+const order: DataGrid = {
+    remoteOperations: false,
+    allowColumnResizing: true,
+    allowColumnReordering: true,
+    wordWrapEnabled: true,
+    noDataText: 'Belum ada data',
+    columnResizingMode: 'widget',
+    class: "!overflow-auto",
+    
+}
+
 const config = {
-    example
+    example,
+    order
 }
 
 export default config

@@ -17,6 +17,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
                 requireTotalCount: true,
                 pageSize: 10,
                 paginate: true,
+                expand: ['Orders'],
             }
         })
 
