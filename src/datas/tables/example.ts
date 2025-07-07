@@ -61,6 +61,13 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         dataField: 'Orders',
         caption: 'Orders',
         dataType: 'object',
+        allowGrouping: false,
+        allowSearch: false,
+        allowFiltering: false,
+        allowHiding:false,
+        allowReordering: false,
+        allowResizing: false,
+        allowHeaderFiltering: false
     }
 ]
 
