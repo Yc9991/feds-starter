@@ -12,14 +12,14 @@ Proyek website SPA yang, menggunakan [Vue 3](https://github.com/vuejs/core) seba
 ---
 
 ## <a name="setup">Setup</a>
-Untuk menginstall semua dependencies, gunakan pnpm, dengan menjalankan fungsi:
+Untuk menginstall semua dependencies, gunakan pnpm, install terlebih dulu di situs resminya jika belum ada, lalu jalankan fungsi:
 
 ```bash
 pnpm i
 ```
 
 ## <a name="env">Env</a>
-Untuk men-setup variabel `.env`  (jika belum ada), rename file bernama `.env.example` menjadi `.env` masukkan data berikut ke dalamnya, dan isi valuenya. `.env` digunakan untuk men-deploy, sedangkan `.env.dev` untuk pengembangan.
+Untuk men-setup variabel `.env`  (jika belum ada), rename file bernama `.env.example` menjadi `.env` masukkan data berikut ke dalamnya, dan isi valuenya. `.env` digunakan saat proses produksi, sedangkan `.env.dev` untuk pengembangan.
 
 ```bash
 PORT=""
@@ -30,7 +30,7 @@ VITE_HTTPS="false"
 ```
 
 ## <a name="vue">Vue</a>
-Penulisan kode sepenuhnya dilakukan dengan composition api milik Vue 3, dengan membungkus script bersama setup `<script setup>`, cek lebih jelasnya tantang [script setup](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup).
+Penulisan kode sepenuhnya dilakukan dengan composition api milik Vue 3, dengan membungkus script bersama setup `<script setup>`, cek lebih jelasnya tentang [script setup](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup).
 
 Vue digunakan bersama Typescript, setiap data memiliki definisi type masing-masing, disarankan untuk memberikan definisi tipe jika ingin membuat data baru.
 
@@ -39,26 +39,26 @@ Vue digunakan bersama Typescript, setiap data memiliki definisi type masing-masi
     <li>
         <a href="../main/public">/public</a>
          <ul>
-            <li>Untuk file-file yang sifatya publik dan dapat dibaca tanpa tercompile dalam proses build</li>
+            <li>Untuk file-file yang sifatnya publik dan dapat dibaca tanpa tercompile dalam proses build, seperti gambar</li>
         </ul>
     </li>
     <li>
         <a href="../main/src/assets">/src/assets</a>
          <ul>
-            <li>Digunakan untuk menyimpan file yang dapat tercompile daat proses build</li>
+            <li>Digunakan untuk menyimpan file yang dapat tercompile daat proses build, misal css,js, atau gambar</li>
         </ul>
     </li>
     <li>
         <a href="../main/src/components">/src/components</a>
          <ul>
-            <li>Digunakan untuk menyimpan komponen</li>
+            <li>Digunakan untuk menyimpan komponen vue</li>
         </ul>
     </li>
     <li>
         <a href="../main/src/composables">/src/composables</a>
          <ul>
             <li>
-            Digunakan untuk menyimpan menyimpan logic yang dapat dipakai berulang-ulang, seperti helper
+            Digunakan untuk menyimpan logic diluar konteks/ekosistem vue yang dapat dipakai berulang-ulang, seperti helper
             </li>
         </ul>
     </li>
@@ -85,13 +85,13 @@ Vue digunakan bersama Typescript, setiap data memiliki definisi type masing-masi
     <li>
         <a href="../main/src/types">/src/types</a>
          <ul>
-            <li>Tempat menyimpan file Typescript, untuk digunakan di berbagai tempat</li>
+            <li>Tempat menyimpan file typescript, untuk digunakan di berbagai tempat</li>
         </ul>
     </li>
 </ol>
 
 ## <a name="ekstensi">Ekstensi</a>
-Pengembang merekomendasikan menggunakan ektensi berikut pada masa develpment. Dapat dicari dan diinstall langsung menggunakan kode editor [VSCode](https://code.visualstudio.com)
+Pengembang merekomendasikan menggunakan ektensi berikut pada masa development. Dapat dicari dan diinstall langsung menggunakan kode editor [VSCode](https://code.visualstudio.com)
 <ol>
     <li>
         <a href="https://marketplace.visualstudio.com/items?itemName=Vue.volar">
