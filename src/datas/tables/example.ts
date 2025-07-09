@@ -51,7 +51,6 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         caption: 'City',
         dataType: 'string',
     },
-  
     {
         dataField: 'PostalCode',
         caption: 'Postal Code',

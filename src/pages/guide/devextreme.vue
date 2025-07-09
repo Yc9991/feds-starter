@@ -26,7 +26,17 @@ exampleStore.fetching().get()
             <template #dataRowTemplate="{ data: rowInfo }">
                 <TableExpandDetail :row="rowInfo.data" :column="staticDataExample" detailKey="Orders"
                     :detailColumn="staticDataOrder">
-                    <template #default="{ details, detailColumn }">
+
+                    <!-- This is how to custom data, make sure to use prefix data_ -->
+                    <template #data_CustomerID>
+                      ID: {{ rowInfo.data.CustomerID }}
+                    </template>
+
+
+
+                    
+
+                    <template #_details="{ details, detailColumn }">
                         <div class="flex flex-col">
                             <div>
                                 <!-- This is current data, do whatever -->

@@ -64,7 +64,11 @@ const detailData = computed(() => {
         <tr class="main-row" role="row">
             <template v-for="col in filteredEntries" :key="col.dataField">
                 <td role="gridcell">
-                    {{ row[String(col.dataField)] }}
+                    <slot v-if="$slots[`data_${String(col.dataField)}`]" :name="`data_${String(col.dataField)}`" />
+
+                    <div v-else>
+                        {{ row[String(col.dataField)] }}
+                    </div>
                 </td>
             </template>
             <td v-if="hasDetail" role="gridcell">
@@ -74,10 +78,7 @@ const detailData = computed(() => {
         </tr>
         <tr v-if="hasDetail && showDetail && detailKey" class="notes-row" role="row">
             <td :colspan="colspan" role="gridcell">
-
-                <slot :row="row" :details="detailData" :detailColumn="detailColumn" />
-
-
+                <slot name="_details" :row="row" :details="detailData" :detailColumn="detailColumn" />
             </td>
         </tr>
     </template>
