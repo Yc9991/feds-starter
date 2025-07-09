@@ -24,17 +24,21 @@ exampleStore.fetching().get()
                 :show-info="true" :show-navigation-buttons="true" />
 
             <template #dataRowTemplate="{ data: rowInfo }">
-
                 <TableExpandDetail :row="rowInfo.data" :column="staticDataExample" detailKey="Orders"
                     :detailColumn="staticDataOrder">
-
-
                     <template #default="{ details, detailColumn }">
-
-
-                        <DxDataGrid :data-source="details" v-bind="datagridConfig.order">
-                            <DxColumn v-for="cols in detailColumn" :key="cols.dataField" v-bind="cols" />
-                        </DxDataGrid>
+                        <div class="flex flex-col">
+                            <div>
+                                <!-- This is current data, do whatever -->
+                                <!-- {{ rowInfo.data }} -->
+                            </div>
+                            <div class="ml-[100px] ">
+                                <!-- This is table -->
+                                <DxDataGrid :data-source="details" v-bind="datagridConfig.order">
+                                    <DxColumn v-for="cols in detailColumn" :key="cols.dataField" v-bind="cols" />
+                                </DxDataGrid>
+                            </div>
+                        </div>
                     </template>
                 </TableExpandDetail>
             </template>

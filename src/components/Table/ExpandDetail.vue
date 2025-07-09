@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T,I">
-import DxButton, { type DxButtonTypes } from 'devextreme-vue/button';
+import DxButton from 'devextreme-vue/button';
 import type { Col } from '@/types'
 
 interface RowData {
@@ -31,41 +31,31 @@ const hasDetail = computed(() => {
 
 const colspan = computed(() => props.column.length + (hasDetail.value ? 1 : 0))
 
-const formatDetail = (detail: any): string => {
-    try {
-        return typeof detail === 'string'
-            ? detail
-            : JSON.stringify(detail, null, 2)
-    } catch {
-        return String(detail)
-    }
-}
-
 
 const detailData = computed(() => {
-  const key = props.detailKey
-  if (!key || !(key in props.row)) return []
+    const key = props.detailKey
+    if (!key || !(key in props.row)) return []
 
-  const val = props.row[key]
-  if (!Array.isArray(val)) return []
+    const val = props.row[key]
+    if (!Array.isArray(val)) return []
 
-  const allowedFields = props.detailColumn?.map(col => col.dataField) ?? []
+    const allowedFields = props.detailColumn?.map(col => col.dataField) ?? []
 
-  // Insert fake indent field at the beginning
-  return val.map(detail => {
-    const cleaned = Object.fromEntries(
-      Object.entries(detail).filter(([key]) => !key.startsWith('@'))
-    )
+    // Insert fake indent field at the beginning
+    return val.map(detail => {
+        const cleaned = Object.fromEntries(
+            Object.entries(detail).filter(([key]) => !key.startsWith('@'))
+        )
 
-    const filtered = Object.fromEntries(
-        //@ts-ignore
-      Object.entries(cleaned).filter(([key]) => allowedFields.includes(key))
-    )
+        const filtered = Object.fromEntries(
+            //@ts-ignore
+            Object.entries(cleaned).filter(([key]) => allowedFields.includes(key))
+        )
 
-    return {
-      ...filtered
-    }
-  })
+        return {
+            ...filtered
+        }
+    })
 })
 </script>
 
@@ -84,10 +74,10 @@ const detailData = computed(() => {
         </tr>
         <tr v-if="hasDetail && showDetail && detailKey" class="notes-row" role="row">
             <td :colspan="colspan" role="gridcell">
-                <div class="ml-[100px]  flex w-full ">
-                    <slot :row="row" :details="detailData" :detailColumn="detailColumn" />
 
-                </div>
+                <slot :row="row" :details="detailData" :detailColumn="detailColumn" />
+
+
             </td>
         </tr>
     </template>
