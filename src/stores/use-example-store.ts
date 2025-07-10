@@ -10,7 +10,11 @@ export const useExampleStore = defineStore('use-example-store', () => {
     const data = ref<DataSource<ExampleTypes> | null>()
     const dataCurrent = ref<ExampleTypes | null>(null)
     const refDatagridExample = ref<DxDataGrid | null>(null)
+
+
     const layout = ref<FlexibleColumnLayout['layout']>('OneColumn')
+
+
     const loading = ref<FetchLoading<'get'>>({
         get: true
     })
@@ -18,7 +22,9 @@ export const useExampleStore = defineStore('use-example-store', () => {
     function rowClick(dom: DxDataGridTypes.RowDblClickEvent<ExampleTypes>) {
         const data = dom.data
         dataCurrent.value = data
-        layout.value = 'TwoColumnsMidExpanded'
+        layout.value = 'TwoColumnsStartExpanded'
+
+        
     }
 
     let fetchGet = async () => {

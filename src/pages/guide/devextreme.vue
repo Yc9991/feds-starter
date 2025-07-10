@@ -67,6 +67,7 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
                             <template #data_CustomerID>
                                 ID: {{ rowInfo.data.CustomerID }}
                             </template>
+
                             <template v-slot:option_details="{ details, detailColumn }">
                                 <div class="flex flex-col">
                                     <div>
@@ -88,16 +89,22 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
             </template>
 
             <template #midColumn>
-
+                <button @click="exampleStore.layout =  'ThreeColumnsMidExpanded'">buka kolom ke 3</button>
+                <!-- {{ exampleStore.dataCurrent }} -->
             </template>
             <template #midColumnButton>
                 <VBtn color="primary" variant="tonal">Edit</VBtn>
                 <VBtn color="primary" variant="text" icon="mdi-plus"></VBtn>
             </template>
 
+            <template #endColumnButton>
+                <VBtn color="primary" variant="text" icon="mdi-information"></VBtn>
+            </template>
 
+            <template #endColumn>
+                kebuka
+            </template>
 
-            
         </TableDrawer>
 
 
