@@ -46,5 +46,13 @@ export interface DataGrid<T = {}> {
         sorting?: boolean,
         grouping?: boolean,
         summary?: boolean
-    }
+    },
+    loadPanel?: {
+        enabled?: boolean,
+        text?: string,
+        showIndicator?: boolean,
+        showPane?: boolean,
+        shading?: boolean,
+        shadingColor?: string
+    },
 }

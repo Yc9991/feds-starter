@@ -9,9 +9,12 @@ const example: DataGrid = {
     showBorders: true,
     columnAutoWidth: true,
     wordWrapEnabled: true,
-    class: "!h-[75vh]",
     noDataText: 'Belum ada data',
-    columnResizingMode: 'widget'
+    columnResizingMode: 'widget',
+    // class: "!h-[75vh]",
+    loadPanel: {
+        enabled: false
+    }
 }
 
 const order: DataGrid = {

@@ -8,7 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import dotenv from 'dotenv'
 import mkcert from 'vite-plugin-mkcert'
 import { federationAutoExpose } from './src/plugins/federation-auto-expose'
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+// import vuetify  from 'vite-plugin-vuetify'
 
 dotenv.config()
 
@@ -39,7 +39,17 @@ export default defineConfig({
     }
   },
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          // treat all tags with a ui5- as custom elements
+          isCustomElement: tag => tag.includes('ui5-')
+        }
+      }
+    }),
+    // vuetify({ 
+    //   // styles: 'sass',
+    // }),
     UnoCSS(),
     //@ts-ignore
     Pages(),

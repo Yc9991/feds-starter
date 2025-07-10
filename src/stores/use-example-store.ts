@@ -1,12 +1,25 @@
 import DataSource from 'devextreme/data/data_source';
-import type { ExampleTypes } from '@/types/index'
-import type { DxDataGrid} from 'devextreme-vue/data-grid'
+import type { ExampleTypes, FetchLoading } from '@/types/index'
+import type { DxDataGrid } from 'devextreme-vue/data-grid'
+import type { DxDataGridTypes } from 'devextreme-vue/data-grid'
+import FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js"
 
 
 export const useExampleStore = defineStore('use-example-store', () => {
 
-    const data = ref<DataSource | null>()
+    const data = ref<DataSource<ExampleTypes> | null>()
+    const dataCurrent = ref<ExampleTypes | null>(null)
     const refDatagridExample = ref<DxDataGrid | null>(null)
+    const layout = ref<FlexibleColumnLayout['layout']>('OneColumn')
+    const loading = ref<FetchLoading<'get'>>({
+        get: true
+    })
+
+    function rowClick(dom: DxDataGridTypes.RowDblClickEvent<ExampleTypes>) {
+        const data = dom.data
+        dataCurrent.value = data
+        layout.value = 'TwoColumnsMidExpanded'
+    }
 
     let fetchGet = async () => {
         const { dataSource } = await useMyFetchOData<ExampleTypes[]>({
@@ -23,15 +36,17 @@ export const useExampleStore = defineStore('use-example-store', () => {
 
         if (dataSource) {
             data.value = dataSource
+            loading.value.get = false
         }
-
-
     }
 
 
     let fetching = () => {
         return {
-            get: () => fetchGet(),
+            get: async () => {
+
+                await fetchGet()
+            }
         }
     }
 
@@ -40,6 +55,10 @@ export const useExampleStore = defineStore('use-example-store', () => {
         refDatagridExample,
         data,
         fetching,
+        dataCurrent,
+        rowClick,
+        layout,
+        loading
 
     }
 

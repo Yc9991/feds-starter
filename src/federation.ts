@@ -1,0 +1,6 @@
+import 'virtual:uno.css'
+import '@mdi/font/css/materialdesignicons.css'
+import 'devextreme/dist/css/dx.fluent.blue.light.css'
+import './ui5'
+import 'vuetify/styles' 
+// import './assets/css/vuetify.scss'
