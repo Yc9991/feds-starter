@@ -12,9 +12,13 @@
     <div v-if="false">
       <dx-license-trigger></dx-license-trigger>
     </div>
-    <div class="p-6">
-      <RouterView />
 
-    </div>
+    <VApp>
+      <div class="p-6">
+        <RouterView />
+  
+      </div>
+
+    </VApp>
   </div>
 </template>

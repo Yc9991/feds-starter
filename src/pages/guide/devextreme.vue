@@ -3,14 +3,22 @@ import 'devextreme/dist/css/dx.fluent.blue.light.css'
 import datagridConfig from '@/datas/datagrid'
 import { staticDataExample, staticDataOrder } from '@/datas'
 import { DxDataGrid, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
+import { useUtils } from '@/composables/use-utils'
 const exampleStore = useExampleStore()
+
+
 exampleStore.fetching().get()
+const { overrideRefTemplate } = useUtils()
+
+const refDatagridExample = ref<DxDataGrid | null>(null)
+
+onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatagridExample.value))
+
 
 </script>
 <template>
     <div class="w-full">
-        <DxDataGrid :ref="(dom: any) => exampleStore.refDatagridExample = dom" :data-source="exampleStore.data"
-            v-bind="datagridConfig.example">
+        <DxDataGrid ref="refDatagridExample" :data-source="exampleStore.data" v-bind="datagridConfig.example">
             <DxColumn v-for="col in staticDataExample" :key="col.dataField" v-bind="col" />
             <DxSearchPanel placeholder="Cari..." :visible="true" />
             <DxGroupPanel :visible="true" />
@@ -27,16 +35,35 @@ exampleStore.fetching().get()
                 <TableExpandDetail :row="rowInfo.data" :column="staticDataExample" detailKey="Orders"
                     :detailColumn="staticDataOrder">
 
-                    <!-- This is how to custom data, make sure to use prefix data_ -->
-                    <template #data_CustomerID>
-                      ID: {{ rowInfo.data.CustomerID }}
+                    <!-- This is how to make cutsom data with component -->
+                    <template #data_Country>
+                        <v-timeline direction="horizontal" line-inset="1" truncate-line="both">
+                            <v-timeline-item size="20" fill-dot dot-color="primary">
+                                <template #icon>
+                                    <v-icon color="white" size="20" icon="mdi-map-marker" />
+                                </template>
+                            </v-timeline-item>
+
+                            <v-timeline-item size="20" fill-dot dot-color="primary">
+                                <template #icon>
+                                    <v-icon color="white" size="20" icon="mdi-map-marker" />
+                                </template>
+                            </v-timeline-item>
+
+                            <v-timeline-item size="20" fill-dot dot-color="primary">
+                                <template #icon>
+                                    <v-icon color="white" size="20" icon="mdi-map-marker" />
+                                </template>
+                            </v-timeline-item>
+                        </v-timeline>
+
                     </template>
 
-
-
-                    
-
-                    <template #_details="{ details, detailColumn }">
+                    <!-- This is how to custom data, make sure to use prefix data_ -->
+                    <template #data_CustomerID>
+                        ID: {{ rowInfo.data.CustomerID }}
+                    </template>
+                    <template v-slot:option_details="{ details, detailColumn }">
                         <div class="flex flex-col">
                             <div>
                                 <!-- This is current data, do whatever -->

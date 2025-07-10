@@ -8,6 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import dotenv from 'dotenv'
 import mkcert from 'vite-plugin-mkcert'
 import { federationAutoExpose } from './src/plugins/federation-auto-expose'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 dotenv.config()
 

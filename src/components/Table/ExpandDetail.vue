@@ -78,7 +78,7 @@ const detailData = computed(() => {
         </tr>
         <tr v-if="hasDetail && showDetail && detailKey" class="notes-row" role="row">
             <td :colspan="colspan" role="gridcell">
-                <slot name="_details" :row="row" :details="detailData" :detailColumn="detailColumn" />
+                <slot name="option_details" :row="row" :details="detailData" :detailColumn="detailColumn" />
             </td>
         </tr>
     </template>
