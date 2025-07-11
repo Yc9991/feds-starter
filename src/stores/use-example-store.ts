@@ -1,5 +1,5 @@
 import DataSource from 'devextreme/data/data_source';
-import type { ExampleTypes, OrderTypes, RegionTypes, FetchLoading } from '@/types/index'
+import type { ExampleTypes, RegionTypes, FetchLoading } from '@/types/index'
 import type { DxDataGrid } from 'devextreme-vue/data-grid'
 import type { DxDataGridTypes } from 'devextreme-vue/data-grid'
 import FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js"

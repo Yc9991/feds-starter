@@ -1,9 +1,9 @@
 <script setup lang="ts" generic="T">
 import type { DataGrid } from '@/types';
 import DxDropDownBox from 'devextreme-vue/drop-down-box';
-import { DxDataGrid, DxSelection, DxFilterRow, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel, type DxDataGridTypes } from 'devextreme-vue/data-grid'
+import { DxDataGrid, DxColumn, type DxDataGridTypes } from 'devextreme-vue/data-grid'
 
-defineProps<{
+const { dropdown, datagrid} = defineProps<{
     dropdown: DxDropDownBox,
     datagrid: {
         dataSource: any,
@@ -17,7 +17,11 @@ const input = defineModel<number>('input', { required: true })
 const open = ref(false)
 
 let selectionChange = (dom: DxDataGridTypes.SelectionChangedEvent) => {
-    input.value = dom.currentSelectedRowKeys[0].RegionDescription
+    
+    if(dropdown.valueExpr){
+        //@ts-ignore
+        input.value = dom.currentSelectedRowKeys[0][dropdown.valueExpr] 
+    }
 }
 </script>
 <template>

@@ -3,8 +3,7 @@
 import datagridConfig from '@/datas/datagrid'
 import { DxLoadPanel } from 'devextreme-vue/load-panel';
 import { staticDataExample, staticDataRegion, staticDataOrder } from '@/datas'
-import DxDropDownBox from 'devextreme-vue/drop-down-box';
-import { DxDataGrid, DxSelection, DxFilterRow, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel, type DxDataGridTypes } from 'devextreme-vue/data-grid'
+import { DxDataGrid, DxSelection, DxFilterRow, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
 import { useUtils } from '@/composables/use-utils'
 const exampleStore = useExampleStore()
 
