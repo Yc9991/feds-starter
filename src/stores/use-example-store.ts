@@ -24,7 +24,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
         dataCurrent.value = data
         layout.value = 'TwoColumnsStartExpanded'
 
-        
+
     }
 
     let fetchGet = async () => {

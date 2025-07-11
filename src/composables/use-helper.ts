@@ -5,6 +5,7 @@ import type {Col } from '@/types'
 export const useHelper = () => {
 
     let nodeEnv: 'development' | 'production' = process.env.NODE_ENV as 'development' | 'production'
+    
 
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     const odataApiBaseUrl = import.meta.env.VITE_ODATA_API_BASE_URL;

@@ -35,11 +35,13 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         dataField: 'ContactName',
         caption: 'Name',
         dataType: 'string',
+        
     },
     {
         dataField: 'Country',
         caption: 'Country',
         dataType: 'string',
+        cellTemplate: 'CountryTemplate',
     },
     {
         dataField: 'Address',
@@ -55,19 +57,8 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         dataField: 'PostalCode',
         caption: 'Postal Code',
         dataType: 'string',
-    },
-    {
-        dataField: 'Orders',
-        caption: 'Orders',
-        dataType: 'object',
-        allowGrouping: false,
-        allowSearch: false,
-        allowFiltering: false,
-        allowHiding:false,
-        allowReordering: false,
-        allowResizing: false,
-        allowHeaderFiltering: false
     }
+   
 ]
 
 
