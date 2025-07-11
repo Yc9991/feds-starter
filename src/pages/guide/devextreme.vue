@@ -22,7 +22,7 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
             <template #startColumn>
                 <DxLoadPanel :position="{ of: '#datagrid-example' }" v-model:visible="exampleStore.loading.get"
                     shading-color="rgba(0,0,0,0.2)" />
-                <DxDataGrid v-if="exampleStore.data" id="datagrid-example" @rowDblClick="exampleStore.rowClick"
+                <DxDataGrid  id="datagrid-example" @rowDblClick="exampleStore.rowClick"
                     ref="refDatagridExample" :data-source="exampleStore.data" v-bind="datagridConfig.example">
 
 

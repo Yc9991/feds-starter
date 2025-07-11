@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import dotenv from 'dotenv'
 import mkcert from 'vite-plugin-mkcert'
+import { unheadVueComposablesImports } from '@unhead/vue'
 import { federationAutoExpose } from './src/plugins/federation-auto-expose'
 // import vuetify  from 'vite-plugin-vuetify'
 
@@ -64,6 +65,7 @@ export default defineConfig({
         'vue-router',
         '@vueuse/core',
         'pinia',
+        unheadVueComposablesImports
       ],
       dts: 'src/auto-imports.d.ts',
       dirs: [

@@ -35,6 +35,9 @@ importers:
       '@ui5/webcomponents-icons':
         specifier: ^2.11.0
         version: 2.12.0
+      '@unhead/vue':
+        specifier: ^2.0.12
+        version: 2.0.12(vue@3.5.17(typescript@5.8.3))
       '@vueuse/core':
         specifier: ^13.4.0
         version: 13.4.0(vue@3.5.17(typescript@5.8.3))
@@ -663,6 +666,11 @@ packages:
 
   '@ui5/webcomponents@2.12.0':
     resolution: {integrity: sha512-MeMYGk9yZsjQhi6hC6WwUjGdLCuD7fJpAlY9tpV0MEfIqmDCTFLFKz0HHleWa1yFOtLrqzJK4KfRLqfU9uZBNQ==}
+
+  '@unhead/vue@2.0.12':
+    resolution: {integrity: sha512-WFaiCVbBd39FK6Bx3GQskhgT9s45Vjx6dRQegYheVwU1AnF+FAfJVgWbrl21p6fRJcLAFp0xDz6wE18JYBM0eQ==}
+    peerDependencies:
+      vue: '>=3.5.13'
 
   '@unocss/astro@66.3.2':
     resolution: {integrity: sha512-O3cmQyAQsSqRSI3CkDpm3to4CrkYPyxrO7XHO0QpfTl2XcFoYsVNTAHnIKdxPG9gjZcB7x03gpRMZKjQHreihA==}
@@ -1813,6 +1821,9 @@ packages:
   undici-types@7.8.0:
     resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
 
+  unhead@2.0.12:
+    resolution: {integrity: sha512-5oo0lwz81XDXCmrHGzgmbaNOxM8R9MZ3FkEs2ROHeW8e16xsrv7qXykENlISrcxr3RLPHQEsD1b6js9P2Oj/Ow==}
+
   unimport@4.2.0:
     resolution: {integrity: sha512-mYVtA0nmzrysnYnyb3ALMbByJ+Maosee2+WyE0puXl+Xm2bUwPorPaaeZt0ETfuroPOtG8jj1g/qeFZ6buFnag==}
     engines: {node: '>=18.12.0'}
@@ -2498,6 +2509,12 @@ snapshots:
       '@ui5/webcomponents-icons-tnt': 2.12.0
       '@ui5/webcomponents-localization': 2.12.0
       '@ui5/webcomponents-theming': 2.12.0
+
+  '@unhead/vue@2.0.12(vue@3.5.17(typescript@5.8.3))':
+    dependencies:
+      hookable: 5.5.3
+      unhead: 2.0.12
+      vue: 3.5.17(typescript@5.8.3)
 
   '@unocss/astro@66.3.2(vite@7.0.0(@types/node@24.0.8)(jiti@2.4.2)(sass@1.89.2)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
@@ -3694,6 +3711,10 @@ snapshots:
       quansync: 0.2.10
 
   undici-types@7.8.0: {}
+
+  unhead@2.0.12:
+    dependencies:
+      hookable: 5.5.3
 
   unimport@4.2.0:
     dependencies:

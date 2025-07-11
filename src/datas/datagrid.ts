@@ -11,7 +11,7 @@ const example: DataGrid = {
     wordWrapEnabled: true,
     noDataText: 'Belum ada data',
     columnResizingMode: 'widget',
-    // class: "!h-[75vh]",
+    class: "!min-h-[calc(100vh-4rem)]",
     loadPanel: {
         enabled: false
     }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js"
+import { useHead } from "@unhead/vue";
 
 const layout = defineModel<FlexibleColumnLayout['layout']>('layout', { required: true })
 
@@ -7,6 +8,14 @@ defineProps<{
     midColumnTitle?: string,
     endColumnTitle?: string
 }>()
+
+
+
+useHead({
+    htmlAttrs: {
+        class: () => layout.value != 'OneColumn' ? 'overflow-hidden' :  'overflow-auto'
+    },
+})
 
 
 let expandDetail = ({ type }: { type: 'end' | 'mid' }) => {
@@ -48,7 +57,7 @@ let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
         </div>
 
 
-        <div class="col" slot="midColumn">
+        <div class="col min-h-screen" slot="midColumn">
 
             <div class="flex flex-row justify-between  items-center  border-b flex-wrap overflow-hidden px-3">
                 <ui5-title level="H2" class="font-bold">
@@ -66,7 +75,7 @@ let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
             <slot name="midColumn" />
         </div>
 
-        <div class="col" slot="endColumn">
+        <div class="col min-h-screen" slot="endColumn">
 
             <div class="flex flex-row justify-between  items-center  border-b flex-wrap overflow-hidden px-3">
                 <ui5-title level="H2" class="font-bold">
