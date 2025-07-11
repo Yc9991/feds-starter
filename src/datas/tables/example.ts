@@ -1,4 +1,4 @@
-import type { Col, ExampleTypes, OrderTypes } from '@/types';
+import type { Col, ExampleTypes, OrderTypes, RegionTypes } from '@/types';
 
 
 
@@ -45,19 +45,45 @@ export const ExampleCol: Col<ExampleTypes>[] = [
     },
     {
         dataField: 'Address',
-        caption: 'Street',
+        caption: 'Address',
         dataType: 'string',
     },
     {
         dataField: 'City',
         caption: 'City',
         dataType: 'string',
+
     },
     {
         dataField: 'PostalCode',
         caption: 'Postal Code',
         dataType: 'string',
+    },
+    {
+        dataField: 'Region',
+        caption: 'Region',
+        dataType: 'string',
+        cellTemplate: 'RegionTemplate',
     }
+   
+]
+
+
+export const RegionCol: Col<RegionTypes>[] = [
+    {
+        dataField: 'RegionID',
+        caption:  'ID',
+        dataType: 'number',
+        alignment: 'left',
+        allowSearch: false,
+        allowFiltering: false,
+        visible: false
+    },
+    {
+        dataField: 'RegionDescription',
+        caption:  'Name',
+        dataType: 'string',
+    },
    
 ]
 
@@ -65,3 +91,6 @@ export const ExampleCol: Col<ExampleTypes>[] = [
 export const staticDataExample = ExampleCol
 
 export const staticDataOrder = OrderCol
+
+export const staticDataRegion = RegionCol
+

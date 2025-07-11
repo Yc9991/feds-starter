@@ -46,7 +46,7 @@ export const useMyFetchOData = async <T extends object | object[]>({ url, option
         const dataSource = new DataSource({
             ...options,
             store: new ODataStore({
-                url: urls ,
+                url: urls,
                 version: 4,
                 beforeSend: function (request: any) {
                     request.params = {
@@ -63,35 +63,34 @@ export const useMyFetchOData = async <T extends object | object[]>({ url, option
         })
 
 
+
+
         //@ts-ignore
         type coll = (keyof T)[]
 
         let result: T = [] as unknown as T
         let col: coll = []
 
-
-
         if (type == 'data') {
+            result = await dataSource.load() as T;
+            // const { data: resultData } = await useMyFetch<any>(`${urls}?top=1`, {
+            //     method: 'GET',
+            //     headers: {
+            //         ...((token) && { Authorization: `Bearer ${(token)}` })
+            //     }
+            // })
 
-            const { data: resultData } = await useMyFetch<any>(`${url}${url}?top=1`, {
-                method: 'GET',
-                headers: {
-                    ...((token) && { Authorization: `Bearer ${(token)}` })
-                }
-            })
-
-            if (resultData) {
-                if (Array.isArray(resultData.value) && resultData.value.length > 0) {
-                    col = Object.keys(resultData.value[0]) as coll
-                } else if (!Array.isArray(resultData.value)) {
-                    col = Object.keys(resultData.value) as coll
+            if (result) {
+                if (Array.isArray(result) && result.length > 0) {
+                    col = Object.keys(result[0]) as coll
+                } else if (!Array.isArray(result)) {
+                    col = Object.keys(result) as coll
                 }
 
             }
-
         }
 
-        return { dataSource, data: result, statusCode: 200, error: null, col: col };
+        return { dataSource: dataSource, data: result, statusCode: 200, error: null, col: col };
     } catch (error: any) {
         console.error('Error loading data:', error);
         return { data: null, dataSource: null, statusCode: Number(error.status) || 500, error, col: null };

@@ -24,13 +24,21 @@ const order: DataGrid = {
     wordWrapEnabled: true,
     noDataText: 'Belum ada data',
     columnResizingMode: 'widget',
-    class: "!overflow-auto",
-    
+}
+
+const region: DataGrid = {
+    remoteOperations: false,
+    allowColumnResizing: true,
+    allowColumnReordering: true,
+    wordWrapEnabled: true,
+    noDataText: 'Belum ada data',
+    columnResizingMode: 'widget',
 }
 
 const config = {
     example,
-    order
+    order,
+    region
 }
 
 export default config

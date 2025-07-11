@@ -9,8 +9,6 @@ defineProps<{
     endColumnTitle?: string
 }>()
 
-
-
 useHead({
     htmlAttrs: {
         class: () => layout.value != 'OneColumn' ? 'overflow-hidden' :  'overflow-auto'

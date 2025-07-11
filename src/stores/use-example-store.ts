@@ -1,5 +1,5 @@
 import DataSource from 'devextreme/data/data_source';
-import type { ExampleTypes, FetchLoading } from '@/types/index'
+import type { ExampleTypes, OrderTypes, RegionTypes, FetchLoading } from '@/types/index'
 import type { DxDataGrid } from 'devextreme-vue/data-grid'
 import type { DxDataGridTypes } from 'devextreme-vue/data-grid'
 import FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js"
@@ -10,21 +10,39 @@ export const useExampleStore = defineStore('use-example-store', () => {
     const data = ref<DataSource<ExampleTypes> | null>()
     const dataCurrent = ref<ExampleTypes | null>(null)
     const refDatagridExample = ref<DxDataGrid | null>(null)
-
+    const dataRegion = ref<RegionTypes[]>([])
 
     const layout = ref<FlexibleColumnLayout['layout']>('OneColumn')
 
 
-    const loading = ref<FetchLoading<'get'>>({
-        get: true
+    const loading = ref<FetchLoading<'get' | 'order'>>({
+        get: true,
+        order: false
     })
 
     function rowClick(dom: DxDataGridTypes.RowDblClickEvent<ExampleTypes>) {
         const data = dom.data
         dataCurrent.value = data
         layout.value = 'TwoColumnsStartExpanded'
+    }
 
+    let fetchGetRegion = async () => {
+        const {data } = await useMyFetchOData<RegionTypes[]>({
+            url: '/Regions',
+            type: 'data',
+            selfProxy: '/odata',
+            options: {
+                key: 'RegionID',
+                requireTotalCount: true,
+                pageSize: 10,
+                paginate: true,
+            }
+        })
 
+        if (data) {
+            dataRegion.value = data
+            loading.value.order = false
+        }
     }
 
     let fetchGet = async () => {
@@ -37,6 +55,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
                 pageSize: 10,
                 paginate: true,
                 expand: ['Orders'],
+                // filter: ['Region', '=', null]
             }
         })
 
@@ -52,7 +71,8 @@ export const useExampleStore = defineStore('use-example-store', () => {
             get: async () => {
 
                 await fetchGet()
-            }
+            },
+            getRegion: async () =>  await fetchGetRegion()
         }
     }
 
@@ -60,6 +80,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
     return {
         refDatagridExample,
         data,
+        dataRegion,
         fetching,
         dataCurrent,
         rowClick,

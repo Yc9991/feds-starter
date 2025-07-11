@@ -1,6 +1,7 @@
 import type {
     QCustomer,
-    QOrder
+    QOrder,
+    QRegion
 } from '@/types'
 
 
@@ -40,3 +41,4 @@ export type OdataMapTypes<
 export type ExampleTypes = OdataMapTypes<typeof QCustomer, [typeof QOrder, 'Orders']>
 
 export type OrderTypes = OdataMapTypes<typeof QOrder, []>
+export type RegionTypes = OdataMapTypes<typeof QRegion, []>
