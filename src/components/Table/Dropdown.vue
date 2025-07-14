@@ -74,20 +74,20 @@ const attachSearchKeyListener = (e: DxDataGridTypes.ContentReadyEvent) => {
                         }
                     }
 
-                    if(ev.key === 'ArrowDown' || ev.key === 'ArrowUp'){
-                        
+                    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+
                         if (!focusedRowKey.value) {
                             focusedRowKey.value = visibleData[0]
-                        }else {
+                        } else {
                             const currentIndex = visibleData.findIndex((item: any) => item[String(dropdown.valueExpr)] === focusedRowKey.value?.[String(dropdown.valueExpr)]);
-    
+
                             if (ev.key === 'ArrowDown' && (currentIndex + 1) < visibleData.length) {
                                 focusedRowKey.value = visibleData[currentIndex + 1]
                             }
                             if (ev.key === 'ArrowUp' && currentIndex > 0) {
                                 focusedRowKey.value = visibleData[currentIndex - 1]
                             }
-    
+
                             isAttachKeyListener.value = true
                         }
 
@@ -114,19 +114,41 @@ let opened = (dom: DxDropDownBoxTypes.OpenedEvent) => {
         focusedRowKey.value = findItem
     }
 }
+
+const datagridWidth = computed(() => {
+    return datagrid.config.width ? datagrid.config.width : 'auto'
+})
 </script>
 <template>
-    <DxDropDownBox @closed="closed" @opened="opened" v-model:value="input" v-model:opened="open"
-        :input-attr="{ 'aria-label': dropdown.displayExpr }" :defer-rendering="true" :show-clear-button="true"
-        :data-source="datagrid.dataSource" v-bind="dropdown" placeholder="Select data...">
+    <div class="flex">
+        <DxDropDownBox @closed="closed" @opened="opened" v-model:value="input" v-model:opened="open"
+            :input-attr="{ 'aria-label': dropdown.displayExpr }" :defer-rendering="true" :show-clear-button="true"
+            :data-source="datagrid.dataSource" v-bind="dropdown" placeholder="Pilih...">
 
-        <template #content>
-            <DxDataGrid @content-ready="attachSearchKeyListener" :data-source="datagrid.dataSource" ref="datagridRef"
-                v-bind="datagrid.config" :focusedRowKey="focusedRowKey" @selection-changed="selectionChange">
-                <DxColumn v-for="col in datagrid.columns" :key="col.dataField" v-bind="col" />
+            <template #content>
+                <DxDataGrid @content-ready="attachSearchKeyListener" :data-source="datagrid.dataSource"
+                    ref="datagridRef" v-bind="datagrid.config" :focusedRowKey="focusedRowKey"
+                    @selection-changed="selectionChange">
+                    <DxColumn v-for="col in datagrid.columns" :key="col.dataField" v-bind="col" />
 
-                <slot />
-            </DxDataGrid>
-        </template>
-    </DxDropDownBox>
+                    <slot />
+                </DxDataGrid>
+            </template>
+        </DxDropDownBox>
+
+    </div>
 </template>
+
+<style>
+
+
+div[role="dialog"][aria-label="Dropdown"] {
+    width: auto !important;
+}
+
+
+.dx-popup-content {
+    min-width: v-bind(datagridWidth);
+
+}
+</style>

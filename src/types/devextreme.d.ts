@@ -32,6 +32,7 @@ export interface DataGrid<T = {}> {
     showBorders?: boolean,
     columnAutoWidth?: boolean,
     height?: number | string,
+    width?: number | string,
     allowColumnResizing?: boolean,
     hoverStateEnabled?: boolean,
     wordWrapEnabled?: boolean,

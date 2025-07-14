@@ -34,7 +34,8 @@ const region: DataGrid = {
     noDataText: 'Belum ada data',
     columnResizingMode: 'widget',
     focusedRowEnabled: true,
-    autoNavigateToFocusedRow: true
+    autoNavigateToFocusedRow: true,
+    width: '200px'
 }
 
 const config = {

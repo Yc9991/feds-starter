@@ -48,6 +48,7 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         caption: 'Region',
         dataType: 'string',
         cellTemplate: 'RegionTemplate',
+        width: 200
     },
     {
         dataField: 'Address',

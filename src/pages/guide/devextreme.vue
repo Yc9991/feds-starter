@@ -17,7 +17,7 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
 
 </script>
 <template>
-    <div class="w-full">
+    <div class="w-full overflow-hidden">
         <TableDrawer v-model:layout="exampleStore.layout" :midColumnTitle="exampleStore.dataCurrent?.CompanyName">
 
             <template #startColumn>
@@ -46,7 +46,7 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
     
                         <template #RegionTemplate="{ data: rowData }">
     
-                            <TableDropdown :dropdown="{ width: '400', valueExpr: 'RegionDescription', displayExpr: 'RegionDescription' }"
+                            <TableDropdown :dropdown="{ valueExpr: 'RegionDescription', displayExpr: 'RegionDescription' }"
                                 :datagrid="({ config: datagridConfig.region, columns: staticDataRegion, dataSource: exampleStore.dataRegion })"
                                 v-model:input="rowData.data.Region">
 
