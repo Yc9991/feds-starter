@@ -26,15 +26,6 @@ importers:
       '@odata2ts/odata2ts':
         specifier: ^0.39.1
         version: 0.39.1(@odata2ts/odata-query-objects@0.27.0)(@odata2ts/odata-service@0.22.1)(@types/node@24.0.8)(typescript@5.8.3)
-      '@ui5/webcomponents':
-        specifier: ^2.11.0
-        version: 2.12.0
-      '@ui5/webcomponents-fiori':
-        specifier: ^2.11.0
-        version: 2.12.0
-      '@ui5/webcomponents-icons':
-        specifier: ^2.11.0
-        version: 2.12.0
       '@unhead/vue':
         specifier: ^2.0.12
         version: 2.0.12(vue@3.5.17(typescript@5.8.3))
@@ -78,6 +69,15 @@ importers:
       '@types/node':
         specifier: ^24.0.8
         version: 24.0.8
+      '@ui5/webcomponents':
+        specifier: ^2.11.0
+        version: 2.12.0
+      '@ui5/webcomponents-fiori':
+        specifier: ^2.11.0
+        version: 2.12.0
+      '@ui5/webcomponents-icons':
+        specifier: ^2.11.0
+        version: 2.12.0
       '@vitejs/plugin-vue':
         specifier: ^6.0.0
         version: 6.0.0(vite@7.0.0(@types/node@24.0.8)(jiti@2.4.2)(sass@1.89.2)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
