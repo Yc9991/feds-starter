@@ -46,13 +46,14 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
     
                         <template #RegionTemplate="{ data: rowData }">
     
-                            <TableDropdown :dropdown="{ valueExpr: 'RegionDescription', displayExpr: 'RegionDescription' }"
+                            <TableDropdown :dropdown="{ width: '400', valueExpr: 'RegionDescription', displayExpr: 'RegionDescription' }"
                                 :datagrid="({ config: datagridConfig.region, columns: staticDataRegion, dataSource: exampleStore.dataRegion })"
                                 v-model:input="rowData.data.Region">
+
+                                <DxSearchPanel width="100%" placeholder="Cari..." :visible="true" />
     
                                 <DxSelection mode="single" />
                                 <DxPaging :enabled="true" :page-size="10" />
-                                <DxFilterRow :visible="true" />
                                 <DxScrolling mode="virtual" />
     
                             </TableDropdown>

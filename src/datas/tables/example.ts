@@ -44,6 +44,12 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         cellTemplate: 'CountryTemplate',
     },
     {
+        dataField: 'Region',
+        caption: 'Region',
+        dataType: 'string',
+        cellTemplate: 'RegionTemplate',
+    },
+    {
         dataField: 'Address',
         caption: 'Address',
         dataType: 'string',
@@ -59,12 +65,7 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         caption: 'Postal Code',
         dataType: 'string',
     },
-    {
-        dataField: 'Region',
-        caption: 'Region',
-        dataType: 'string',
-        cellTemplate: 'RegionTemplate',
-    }
+   
    
 ]
 
@@ -77,7 +78,6 @@ export const RegionCol: Col<RegionTypes>[] = [
         alignment: 'left',
         allowSearch: false,
         allowFiltering: false,
-        visible: false
     },
     {
         dataField: 'RegionDescription',

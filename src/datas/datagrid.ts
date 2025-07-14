@@ -33,6 +33,8 @@ const region: DataGrid = {
     wordWrapEnabled: true,
     noDataText: 'Belum ada data',
     columnResizingMode: 'widget',
+    focusedRowEnabled: true,
+    autoNavigateToFocusedRow: true
 }
 
 const config = {

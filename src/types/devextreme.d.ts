@@ -55,4 +55,6 @@ export interface DataGrid<T = {}> {
         shading?: boolean,
         shadingColor?: string
     },
+    focusedRowEnabled?: boolean,
+    autoNavigateToFocusedRow?: boolean,
 }
