@@ -1,8 +1,5 @@
 <script setup lang="ts">
-
-const route = useRoute()
 const router = useRouter()
-
 
 
 onMounted(() => {
@@ -18,8 +15,7 @@ let change = () => {
     <div>
 
         <button @click="change()">
-            Change route query
+            Ganti query Unit menjadi 7777
         </button>
-        Di sini halaman {{ route.path }} unit {{ route.params.unit }}
     </div>
 </template>

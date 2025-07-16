@@ -163,7 +163,9 @@ export default defineConfig({
         //nama aplikasi federasi (bebas)
         name: 'feds-starter',
         //file apa saja yang ingin di include di folder /src/pages
-        include: ['/contoh/**'],
+        expose: {
+            include: ['/contoh/**'],
+        }
     }),
   ],
   //build config yang support untuk federasi

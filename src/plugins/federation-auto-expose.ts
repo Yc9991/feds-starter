@@ -4,13 +4,39 @@ import { normalizePath, Plugin } from 'vite'
 import federation from '@originjs/vite-plugin-federation'
 
 interface FederationExposeOptions {
-  dir?: string
   name?: string
   filename?: string
-  shared?: Record<string, any> | string[]
-  include?: string[]
-  exclude?: string[]
+  expose?: {
+    dir?: string
+    include?: string[]
+    exclude?: string[],
+    configFile?: `${string}.vue`
+  },
+  shared?: {
+    include?: Record<string, any> | string[],
+    exclude?: ('vue' | 'vue-router' | 'pinia' | '@vueuse/core')[]
+  }
 }
+
+export interface FederationConfigs {
+  name: string,
+  menu?: SidebarMenu[],
+}
+
+interface SidebarMenu {
+  title: string,
+  subtitle?: string,
+  url?: string,
+  icon?: string,
+  color?: string,
+  button?: {
+    title?: string,
+    icon?: string
+  }
+  items?: SidebarMenu[],
+}
+
+
 
 /* ─── slug + key helpers ───────────────────────────────────────────── */
 
@@ -66,15 +92,20 @@ function globToRegex(glob: string): RegExp {
 
 /* ─── plugin ───────────────────────────────────────────────────────── */
 
-export async function federationAutoExpose(opts: FederationExposeOptions = {}): Promise<Plugin> {
+export function federationAutoExpose(opts: FederationExposeOptions = {}): Plugin {
   const {
-    dir = 'src/pages',
     name = 'example',
     filename = 'remoteEntry.js',
     shared,
+    expose,
+  } = opts
+
+  const {
+    dir = 'src/pages',
+    configFile,
     include = [],
     exclude = [],
-  } = opts
+  } = expose || {}
 
   const defaultShared = ['vue', 'vue-router', 'pinia', '@vueuse/core']
 
@@ -87,9 +118,12 @@ export async function federationAutoExpose(opts: FederationExposeOptions = {}): 
 
   const exposes: Record<string, string> = {}
 
-  for (const abs of files) {
-    const relPosix = normalizePath(path.relative(pagesRoot, abs))   // e.g. "contoh/news/hello.vue"
+  const configAbs = configFile ? path.resolve(process.cwd(), configFile) : null
 
+  for (const abs of files) {
+    if (configAbs && normalizePath(abs) === normalizePath(configAbs)) continue // ✅ skip configFile from include loop
+
+    const relPosix = normalizePath(path.relative(process.cwd(), abs))
     const incOK = !incRE.length || incRE.some(r => r.test(relPosix))
     const excOK = !excRE.length || !excRE.some(r => r.test(relPosix))
     if (!incOK || !excOK) continue
@@ -100,117 +134,38 @@ export async function federationAutoExpose(opts: FederationExposeOptions = {}): 
     }
   }
 
-  const overrideShared = Array.isArray(shared) ? [...defaultShared, ...shared] : defaultShared
+  // 👉 If configFile is set, ensure it's added
+  if (configFile) {
+    const abs = path.resolve(process.cwd(), configFile)
+    if (fs.existsSync(abs) && abs.endsWith('.vue')) {
+      const key = './config' // 👈 override the key regardless of location
+      if (!exposes[key]) {
+        exposes[key] = normalizePath(path.relative(process.cwd(), abs))
+      }
+    } else {
+      console.warn(`[federationAutoExpose] configFile not found or not a .vue file: ${configFile}`)
+    }
+  }
+
+
+  const overrideShared = Array.isArray(shared?.include)
+    ? [...defaultShared, ...shared.include]
+    : defaultShared
 
   const uniqueShared = [...new Set(overrideShared)]
+
+  const excludeShared = uniqueShared.filter((e) =>
+    !opts.shared?.exclude || !opts.shared?.exclude.includes(e)
+  )
 
 
   return {
     enforce: 'pre',
-    ...federation({ name, filename, shared: uniqueShared, exposes })
+    ...federation({ name, filename, shared: excludeShared, exposes })
   }
+
+
+
 }
 
 
-
-
-
-// import fs from 'fs'
-// import path from 'path'
-// import { normalizePath } from 'vite'
-// import federation from '@originjs/vite-plugin-federation'
-// import type { Plugin } from 'vite'
-
-// interface FederationExposeOptions {
-//   dir?: string
-//   name?: string
-//   filename?: string
-//   shared?: Record<string, any> | string[]
-// }
-
-// /* ───────────────── helpers ───────────────── */
-
-// const toSlug = (seg: string) =>
-//   seg
-//     .replace(/([a-z0-9])([A-Z])/g, '$1-$2') // camel → kebab
-//     .replace(/\s+/g, '-')                   // spaces → dash
-//     .toLowerCase()                          // lower
-// // keep underscores / brackets untouched
-
-// function buildKey(abs: string, pagesRoot: string): string {
-//   const rel = normalizePath(path.relative(pagesRoot, abs))            // e.g. "contoh/catatan_/index.vue"
-//     .replace(/\.vue$/, '')                                            // strip .vue
-//   const parts = rel.split('/')
-
-//   // helper to get element from the end
-//   const last = <T>(arr: T[]) => arr[arr.length - 1]
-//   const last2 = <T>(arr: T[]) => arr[arr.length - 2]
-
-//   // 1️⃣  collapse “…/index.vue”
-//   if (last(parts) === 'index') parts.pop()
-
-//   // 2️⃣  collapse “…/foo/foo.vue”
-//   if (
-//     parts.length >= 2 &&
-//     last(parts).toLowerCase() === last2(parts)
-//   ) {
-//     parts.pop()
-//   }
-
-//   const slug = parts.map(toSlug).join('-')
-//   return `./${slug || 'index'}`   // 👈 when slug === '' → './index'
-// }
-
-// function walk(dir: string, vueFiles: string[]) {
-//   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-//     const full = path.join(dir, entry.name)
-//     if (entry.isDirectory()) walk(full, vueFiles)
-//     else if (entry.isFile() && entry.name.endsWith('.vue')) vueFiles.push(full)
-//   }
-// }
-
-// /* ───────────────── plugin ───────────────── */
-
-// export async function federationAutoExpose(
-//   opts: FederationExposeOptions = {}
-// ): Promise<Plugin> {
-//   const {
-//     dir = 'src/pages',
-//     name = 'example',
-//     filename = 'remoteEntry.js',
-//     shared,
-//     include,
-//     exclude
-//   } = opts
-
-//   const defaultShared = ['vue', 'vue-router', 'pinia', '@vueuse/core']
-
-//   const pagesRoot = path.resolve(process.cwd(), dir)
-//   const files: string[] = []
-//   walk(pagesRoot, files)
-
-//   const exposes: Record<string, string> = {}
-
-//   // first add index.vue & same-name.vue so they win
-//   for (const abs of files.sort((a, b) => a.localeCompare(b))) {
-//     const key = buildKey(abs, pagesRoot)
-//     if (!exposes[key]) {
-//       exposes[key] = normalizePath(path.relative(process.cwd(), abs))
-//     }
-//   }
-
-//   const overrideShared = Array.isArray(shared) ? [...defaultShared, ...shared] : defaultShared
-
-//   const uniqueShared = [...new Set(overrideShared)]
-
-//   return {
-//     enforce: 'pre',
-//     ...federation({
-//       name,
-//       filename,
-//       shared: uniqueShared,
-//       exposes,
-//     })
-
-//   }
-// }

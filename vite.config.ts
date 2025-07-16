@@ -76,7 +76,10 @@ export default defineConfig({
     }),
     federationAutoExpose({
       name: 'feds-starter',
-      include: ['/contoh/**'],
+      expose: {
+        configFile: 'src/pages/guide/config.vue',
+        include: ['src/pages/contoh/**'],
+      }
     }),
     Components({
       extensions: ['vue'],

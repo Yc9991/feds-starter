@@ -5,6 +5,6 @@ const route = useRoute()
 </script>
 <template>
     <div>
-        Di sini halaman {{ route.path }} unit {{ route.params.unit_unit }}
+        Di sini halaman {{ route.path }}
     </div>
 </template>
