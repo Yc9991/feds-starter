@@ -13,6 +13,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TableDrawer: typeof import('./components/Table/Drawer.vue')['default']
     TableDropdown: typeof import('./components/Table/Dropdown.vue')['default']
+    TableForm: typeof import('./components/Table/Form.vue')['default']
     Text: typeof import('./components/Text.vue')['default']
   }
 }

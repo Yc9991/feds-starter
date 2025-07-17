@@ -1,11 +1,11 @@
-import type {Col } from '@/types'
+import type { Col } from '@/types'
 
 
 
 export const useHelper = () => {
 
     let nodeEnv: 'development' | 'production' = process.env.NODE_ENV as 'development' | 'production'
-    
+
 
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     const odataApiBaseUrl = import.meta.env.VITE_ODATA_API_BASE_URL;
@@ -77,7 +77,7 @@ export const useHelper = () => {
             }
             return str;
         }
-    
+
         function findDeepestMessage(obj: any): string | null {
             if (typeof obj === 'string') {
                 const parsed = recursiveParse(obj);
@@ -86,14 +86,14 @@ export const useHelper = () => {
                 }
                 return parsed as string;
             }
-    
+
             if (Array.isArray(obj)) {
                 for (const item of obj) {
                     const msg = findDeepestMessage(item);
                     if (msg) return msg;
                 }
             }
-    
+
             if (typeof obj === 'object' && obj !== null) {
                 for (const key of Object.keys(obj)) {
                     if (/^messages?$/i.test(key)) {
@@ -102,21 +102,21 @@ export const useHelper = () => {
                     }
                 }
             }
-    
+
             return null;
         }
-    
+
         const parsed = typeof rawResponse === 'string' ? recursiveParse(rawResponse) : rawResponse;
-    
+
         if (typeof parsed === 'object' && parsed !== null && parsed.Message) {
             const nestedMessage = findDeepestMessage(parsed.Message);
             return nestedMessage ?? parsed.Message;
         }
-    
+
         return typeof parsed === 'string' ? parsed : null;
     }
 
-    
+
     const createGroupTemplate = <T = {}>(columns: Col<T>[], template: { items: string[] }[]): Col<T>[] => {
         return columns.map((e) => {
             const isGroup = template.find((el) => el.items.includes(String(e.dataField)));
@@ -124,8 +124,41 @@ export const useHelper = () => {
         }) as Col<T>[]
     }
 
+    const form = () => {
+        type AnyObject = Record<string, any>;
+        type IgnoreDataOptions<T> =
+            | { item: T; exclude: (keyof T)[]; include?: never }
+            | { item: T; include: (keyof T)[]; exclude?: never };
+
+        function ignoreData<T extends AnyObject>(options: IgnoreDataOptions<T>): Partial<T> {
+            const { item } = options;
+
+            if (options.exclude) {
+                const result = { ...item };
+                for (const key of options.exclude) {
+                    delete result[key];
+                }
+                return result;
+            }
+
+            if (options.include) {
+                const result = {} as Partial<T>;
+                for (const key of options.include) {
+                    result[key] = item[key];
+                }
+                return result;
+            }
+
+            return item;
+
+        }
+        return {
+            ignoreData
+        }
+    }
 
     return {
+        form,
         createGroupTemplate,
         isJSONString,
         safeJSONParse,

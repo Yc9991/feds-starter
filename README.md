@@ -154,19 +154,21 @@ Untuk membuat halaman federasi `Remote` pada repo ini, cukup membuat routing pad
 ```ts
 import { defineConfig } from 'vite'
 //sumber custom plugin
-import { federationAutoExpose } from './src/plugins/federation-auto-expose'
+import { federationAutoExpose } from 'federation-bundle'
 
 export default defineConfig({
   plugins: [
      //custom plugin federasi
     federationAutoExpose({
-        //nama aplikasi federasi (bebas)
+          //nama aplikasi federasi (bebas)
         name: 'feds-starter',
         //file apa saja yang ingin di include di folder /src/pages
         expose: {
-            include: ['/contoh/**'],
+          include: ['/contoh/**'],
+          //letak file config
+          configFile: 'federation.config.ts',
         }
-    }),
+    })
   ],
   //build config yang support untuk federasi
   build: {

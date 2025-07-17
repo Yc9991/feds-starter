@@ -5,6 +5,11 @@ import { DxLoadPanel } from 'devextreme-vue/load-panel';
 import { staticDataExample, staticDataRegion, staticDataOrder } from '@/datas'
 import { DxDataGrid, DxSelection, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
 import { useUtils } from '@/composables/use-utils'
+import {
+    DxSimpleItem,
+    DxRequiredRule
+} from 'devextreme-vue/form';
+
 const exampleStore = useExampleStore()
 
 exampleStore.fetching().get()
@@ -14,6 +19,16 @@ const { overrideRefTemplate } = useUtils()
 const refDatagridExample = ref<DxDataGrid | null>(null)
 
 onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatagridExample.value))
+
+
+const handleSubmit = (event: Event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement
+    console.log((form[0] as HTMLInputElement).value)
+
+
+
+}
 
 </script>
 <template>
@@ -28,38 +43,39 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
                         shading-color="rgba(0,0,0,0.2)" />
                     <DxDataGrid id="datagrid-example" @rowDblClick="exampleStore.rowClick" ref="refDatagridExample"
                         :data-source="exampleStore.data" v-bind="datagridConfig.example">
-    
-    
+
+
                         <DxColumn v-for="col in staticDataExample" :key="col.dataField" v-bind="col" />
-    
+
                         <DxMasterDetail :enabled="true" template="masterDetailTemplate" />
-    
+
                         <template #masterDetailTemplate="{ data: dataMaster }">
                             <!-- get all data -->
                             <!-- {{ dataMaster.data }} -->
-    
+
                             <!-- use table inside table -->
                             <DxDataGrid :data-source="dataMaster.data.Orders" v-bind="datagridConfig.order">
                                 <DxColumn v-for="cols in staticDataOrder" :key="cols.dataField" v-bind="cols" />
                             </DxDataGrid>
                         </template>
-    
+
                         <template #RegionTemplate="{ data: rowData }">
-    
-                            <TableDropdown :dropdown="{ valueExpr: 'RegionDescription', displayExpr: 'RegionDescription' }"
+
+                            <TableDropdown
+                                :dropdown="{ valueExpr: 'RegionDescription', displayExpr: 'RegionDescription' }"
                                 :datagrid="({ config: datagridConfig.region, columns: staticDataRegion, dataSource: exampleStore.dataRegion })"
                                 v-model:input="rowData.data.Region">
 
                                 <DxSearchPanel width="100%" placeholder="Cari..." :visible="true" />
-    
+
                                 <DxSelection mode="single" />
                                 <DxPaging :enabled="true" :page-size="10" />
                                 <DxScrolling mode="virtual" />
-    
+
                             </TableDropdown>
-    
+
                         </template>
-    
+
                         <!-- This is how to create custom data -->
                         <template #CountryTemplate>
                             <v-timeline direction="horizontal" line-inset="1" truncate-line="both">
@@ -73,7 +89,7 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
                                         <v-icon color="white" size="20" icon="mdi-map-marker" />
                                     </template>
                                 </v-timeline-item>
-    
+
                                 <v-timeline-item size="20" fill-dot dot-color="primary">
                                     <template #icon>
                                         <v-icon color="white" size="20" icon="mdi-map-marker" />
@@ -81,7 +97,7 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
                                 </v-timeline-item>
                             </v-timeline>
                         </template>
-    
+
                         <DxSearchPanel placeholder="Cari..." :visible="true" />
                         <DxGroupPanel :visible="true" />
                         <DxGrouping :auto-expand-all="true" />
@@ -92,14 +108,23 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
                         <DxPaging :page-size="10" />
                         <DxPager :visible="true" :allowed-page-sizes="[5, 10, 'all']" :show-page-size-selector="true"
                             :show-info="true" :show-navigation-buttons="true" />
-    
+
                     </DxDataGrid>
                 </div>
             </template>
 
             <template #midColumn>
-                <button @click="exampleStore.layout = 'ThreeColumnsMidExpanded'">buka kolom ke 3</button>
-                <!-- {{ exampleStore.dataCurrent }} -->
+                <!-- <button @click="exampleStore.layout = 'ThreeColumnsMidExpanded'">buka kolom ke 3</button> -->
+                <div class="p-3 overflow-auto h-[80vh]">
+
+                    <TableForm v-if="exampleStore.dataCurrent" @submit="handleSubmit"
+                        :input="{ list: exampleStore.dataCurrent, include: (['CompanyName', 'ContactName']) }">
+                        <!-- <DxSimpleItem data-field="CompanyName" >
+                                <DxRequiredRule message="Email is required" />
+                            </DxSimpleItem> -->
+                    </TableForm>
+
+                </div>
             </template>
             <template #midColumnButton>
                 <VBtn color="primary" variant="tonal">Edit</VBtn>
@@ -115,10 +140,6 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
             </template>
 
         </TableDrawer>
-
-
-
-
     </div>
 
 </template>
