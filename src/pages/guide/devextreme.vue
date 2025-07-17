@@ -89,7 +89,6 @@ const handleSubmit = (event: Event) => {
                                         <v-icon color="white" size="20" icon="mdi-map-marker" />
                                     </template>
                                 </v-timeline-item>
-
                                 <v-timeline-item size="20" fill-dot dot-color="primary">
                                     <template #icon>
                                         <v-icon color="white" size="20" icon="mdi-map-marker" />
@@ -108,7 +107,6 @@ const handleSubmit = (event: Event) => {
                         <DxPaging :page-size="10" />
                         <DxPager :visible="true" :allowed-page-sizes="[5, 10, 'all']" :show-page-size-selector="true"
                             :show-info="true" :show-navigation-buttons="true" />
-
                     </DxDataGrid>
                 </div>
             </template>
@@ -116,14 +114,9 @@ const handleSubmit = (event: Event) => {
             <template #midColumn>
                 <!-- <button @click="exampleStore.layout = 'ThreeColumnsMidExpanded'">buka kolom ke 3</button> -->
                 <div class="p-3 overflow-auto h-[80vh]">
-
                     <TableForm v-if="exampleStore.dataCurrent" @submit="handleSubmit"
-                        :input="{ list: exampleStore.dataCurrent, include: (['CompanyName', 'ContactName']) }">
-                        <!-- <DxSimpleItem data-field="CompanyName" >
-                                <DxRequiredRule message="Email is required" />
-                            </DxSimpleItem> -->
+                        :input="{ list: exampleStore.dataCurrent, exclude: (['Orders']) }">
                     </TableForm>
-
                 </div>
             </template>
             <template #midColumnButton>

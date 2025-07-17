@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T">
-import { DxForm, DxSimpleItem, DxGroupItem, DxButtonItem, DxRequiredRule } from 'devextreme-vue/form';
-import { DxButton } from 'devextreme-vue/button';
+import { DxForm, DxSimpleItem, DxGroupItem, DxButtonItem, DxRequiredRule } from 'devextreme-vue/form'
+import { DxButton } from 'devextreme-vue/button'
 
 const { form } = useHelper()
 
@@ -24,7 +24,6 @@ const emit = defineEmits<{
     submit: [dom: Event]
 }>()
 
-
 let submit = (dom: Event) => {
     emit('submit', dom)
 }
@@ -34,7 +33,6 @@ let submit = (dom: Event) => {
         <DxForm :col-count="2" :form-data="formList">
             <slot />
         </DxForm>
-
         <div class="flex justify-end">
             <DxButton text="Simpan" icon="save" :useSubmitBehavior="true">
             </DxButton>
