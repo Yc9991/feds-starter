@@ -6,9 +6,9 @@ const count = ref(0);
 </script>
 <template>
     <div>
-        Di sini halaman {{ route.path }}
-        <br />
         
+        Di sini halaman {{ route?.path }}
+        <br />
 
         <DxButton @click="count++"  type="success">
             Tambah {{ count }}

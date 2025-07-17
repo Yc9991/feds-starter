@@ -8,7 +8,9 @@ import Components from 'unplugin-vue-components/vite'
 import dotenv from 'dotenv'
 import mkcert from 'vite-plugin-mkcert'
 import { unheadVueComposablesImports } from '@unhead/vue'
-import { federationAutoExpose } from './src/plugins/federation-auto-expose'
+// import { federationAutoExpose } from './src/plugins/federation-auto-expose'
+import { federationAutoExpose } from 'federation-bundle'
+
 // import vuetify  from 'vite-plugin-vuetify'
 
 dotenv.config()
@@ -74,13 +76,15 @@ export default defineConfig({
       ],
       vueTemplate: true,
     }),
-    federationAutoExpose({
-      name: 'feds-starter',
-      expose: {
-        configFile: 'src/pages/guide/config.vue',
-        include: ['src/pages/contoh/**'],
+    federationAutoExpose(
+      {
+        name: 'feds-starter',
+        expose: {
+          include: ['src/pages/contoh/**'],
+          configFile: 'federation.config.ts',
+        }
       }
-    }),
+    ),
     Components({
       extensions: ['vue'],
       include: [/\.vue$/, /\.vue\?vue/],

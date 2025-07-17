@@ -1,18 +1,7 @@
-<script setup lang="ts">
-import type { FederationConfigs } from '@/plugins/federation-auto-expose'
+import { defineConfig } from "federation-bundle/runtime";
 
-declare global {
-    interface Window {
-        configNameList: string[]
-        [configName]: FederationConfigs
-    }
-}
-const name = 'example'
-const configName = `${name}Config`
-Array.isArray(window.configNameList) && window.configNameList.push(configName)
-
-window[configName] = {
-    name,
+export default defineConfig({
+    name: "example",
     menu: [
         {
             title: 'Contoh',
@@ -28,7 +17,6 @@ window[configName] = {
                     title: 'Catatan',
                     url: '/catatan_',
                     icon: 'home',
-
                     items: [
                         {
                             title: 'Catatan List',
@@ -40,7 +28,7 @@ window[configName] = {
                             url: '/lagi_',
                             icon: 'home',
 
-                        },
+                        }
                     ]
                 }
             ]
@@ -49,11 +37,4 @@ window[configName] = {
         },
 
     ]
-}
-</script>
-
-<template>
-    <div>
-
-    </div>
-</template>
+});
