@@ -157,7 +157,7 @@ export const useHelper = () => {
 
             const form = dom
             const data: Record<string, string> = {}
-            Array.from(form.elements).forEach((e) => {
+            Array.from(form.elements).filter((el) => (el as HTMLInputElement).name).forEach((e) => {
                 const inputElement = e as HTMLInputElement;
                 if (inputElement.value) {
                     data[inputElement.name] = inputElement.value;

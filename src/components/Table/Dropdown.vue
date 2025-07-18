@@ -124,6 +124,7 @@ const datagridWidth = computed(() => {
         <DxDropDownBox @closed="closed" @opened="opened" v-model:value="input" v-model:opened="open"
             :input-attr="{ 'aria-label': dropdown.displayExpr }" :defer-rendering="true" :show-clear-button="true"
             :data-source="datagrid.dataSource" v-bind="dropdown" placeholder="Pilih...">
+            <slot name="dropdown"></slot>
 
             <template #content>
                 <DxDataGrid @content-ready="attachSearchKeyListener" :data-source="datagrid.dataSource"
