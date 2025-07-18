@@ -124,7 +124,7 @@ export const useHelper = () => {
         }) as Col<T>[]
     }
 
-    const form = () => {
+    const odataForm = () => {
         type AnyObject = Record<string, any>;
         type IgnoreDataOptions<T> =
             | { item: T; exclude: (keyof T)[]; include?: never }
@@ -152,13 +152,31 @@ export const useHelper = () => {
             return item;
 
         }
+
+        let extractData = ({ dom }: { dom: HTMLFormElement }) => {
+
+            const form = dom
+            const data: Record<string, string> = {}
+            Array.from(form.elements).forEach((e) => {
+                const inputElement = e as HTMLInputElement;
+                if (inputElement.value) {
+                    data[inputElement.name] = inputElement.value;
+                }
+            })
+
+            return data;
+
+
+
+        }
         return {
+            extractData,
             ignoreData
         }
     }
 
     return {
-        form,
+        odataForm,
         createGroupTemplate,
         isJSONString,
         safeJSONParse,

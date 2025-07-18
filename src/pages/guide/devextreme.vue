@@ -5,16 +5,15 @@ import { DxLoadPanel } from 'devextreme-vue/load-panel';
 import { staticDataExample, staticDataRegion, staticDataOrder } from '@/datas'
 import { DxDataGrid, DxSelection, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
 import { useUtils } from '@/composables/use-utils'
-import {
-    DxSimpleItem,
-    DxRequiredRule
-} from 'devextreme-vue/form';
+import type { ExampleTypes, TableForm } from '@/types';
+
 
 const exampleStore = useExampleStore()
 
 exampleStore.fetching().get()
 exampleStore.fetching().getRegion()
 const { overrideRefTemplate } = useUtils()
+const { odataForm } = useHelper()
 
 const refDatagridExample = ref<DxDataGrid | null>(null)
 
@@ -22,14 +21,46 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
 
 
 const handleSubmit = (event: Event) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement
-    console.log((form[0] as HTMLInputElement).value)
+    const data = event.target as HTMLFormElement;
+
+    if (data) {
+        const result = odataForm().extractData({ dom: data })
+        console.log(result)
+    }
+
+};
+
+// @ts-ignore
+const tableFormOption = computed<TableForm<ExampleTypes>>(() => {
+    return {
+        form: { colCount: 2 },
+        input: {
+            list: exampleStore.dataCurrent,
+            exclude: (['Orders']),
+            custom: {
+                CompanyName: {
+                    dataField: 'CompanyName',
+                    label: {
+                        text: 'Nama Perusahaan',
+                    }
+                },
+                Fax: {
+                    colSpan: 2,
+                },
+            },
+            validation: {
+                CompanyName: {
+                    type: 'required',
+                    message: 'Nama Perusahaan harus diisi'
+                }
+            }
+
+        }
 
 
 
-}
-
+    }
+})
 </script>
 <template>
     <div class="w-full overflow-hidden">
@@ -114,8 +145,11 @@ const handleSubmit = (event: Event) => {
             <template #midColumn>
                 <!-- <button @click="exampleStore.layout = 'ThreeColumnsMidExpanded'">buka kolom ke 3</button> -->
                 <div class="p-3 overflow-auto h-[80vh]">
-                    <TableForm v-if="exampleStore.dataCurrent" @submit="handleSubmit"
-                        :input="{ list: exampleStore.dataCurrent, exclude: (['Orders']) }">
+                    <TableForm v-if="exampleStore.dataCurrent" @submit="handleSubmit" 
+                    
+                    
+                    v-bind="tableFormOption">
+
                     </TableForm>
                 </div>
             </template>
