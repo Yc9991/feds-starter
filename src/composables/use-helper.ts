@@ -1,4 +1,6 @@
-import type { Col } from '@/types'
+import type { Col, DataGrid } from '@/types'
+import DataSource from 'devextreme/data/data_source';
+import { DxDataGrid } from 'devextreme-vue/data-grid'
 
 
 
@@ -130,17 +132,11 @@ export const useHelper = () => {
             | { item: T; exclude: (keyof T)[]; include?: never }
             | { item: T; include: (keyof T)[]; exclude?: never };
 
-
-
-        function deepClone<T>(obj: T): T {
-            return JSON.parse(JSON.stringify(obj)); // Safe for plain objects
-        }
-
         function ignoreData<T extends AnyObject>(options: IgnoreDataOptions<T>): Partial<T> {
             const { item } = options;
 
             if (options.exclude) {
-                const result = deepClone(item)
+                const result = { ...item };
                 for (const key of options.exclude) {
                     delete result[key];
                 }
@@ -155,11 +151,11 @@ export const useHelper = () => {
                 return result;
             }
 
-            return deepClone(item)
+            return item;
 
         }
 
-        let extractData = ({ dom }: { dom: HTMLFormElement }) => {
+        let extractData = <T extends any>({ dom }: { dom: HTMLFormElement }): T => {
 
             const form = dom
             const data: Record<string, string> = {}
@@ -170,14 +166,71 @@ export const useHelper = () => {
                 }
             })
 
-            return data;
-
-
-
+            return data as T;
         }
+
+
+
+
+        const submit = async <T extends object | object[]>({
+            item,
+            type,
+            datagridConfig,
+            datagridRef,
+            url
+        }: { url: string, item: T, type: 'Add' | 'Edit', datagridConfig: DataGrid<T>, datagridRef?: DxDataGrid | null }) => {
+
+            //@ts-ignore
+            if (!item[datagridConfig.keyExpr] && type == 'Add') delete item[datagridConfig.keyExpr]
+
+
+            //@ts-ignore
+            var payload = { data: item, keyName: datagridConfig.keyExpr }
+            var method = 'POST'
+
+            if (type == 'Edit') {
+                //@ts-ignore
+                payload = { data: item, keyValue: item?.[String(datagridConfig.keyExpr)], keyName: datagridConfig.keyExpr }
+                method = 'PUT'
+            }
+
+            console.log({
+                url,
+                //@ts-ignore
+                method,
+                //@ts-ignore
+                payload
+            })
+
+            const { data: resultData } = await useMyFetchOData<T>({
+                url,
+                //@ts-ignore
+                method,
+                //@ts-ignore
+                payload,
+            })
+
+            if (resultData) {
+                //@ts-ignore
+                delete resultData["@odata.context"]
+
+                if (type == 'Add') {
+                    // notif({ type: 'success', message: 'Data berhasil ditambahkan!' })
+                }
+
+                if (type == 'Edit' && resultData) {
+                    // notif({ type: 'success', message: 'Data berhasil diedit!' })
+                }
+                if (datagridRef) datagridRef?.instance?.refresh()
+            }
+        }
+
+
+
         return {
             extractData,
-            ignoreData
+            ignoreData,
+            submit
         }
     }
 

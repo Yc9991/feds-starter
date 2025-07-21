@@ -9,6 +9,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ModalPopup: typeof import('./components/Modal/Popup.vue')['default']
+    PageExample: typeof import('./components/Page/Example/Index.vue')['default']
+    PageExampleForm: typeof import('./components/Page/Example/Form.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TableDrawer: typeof import('./components/Table/Drawer.vue')['default']

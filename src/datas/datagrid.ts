@@ -1,7 +1,8 @@
 //@unocss-include
-import type { DataGrid } from '@/types';
+import type { DataGrid, ExampleTypes } from '@/types';
 
-const example: DataGrid = {
+const example: DataGrid<ExampleTypes> = {
+    keyExpr: 'CustomerID',
     remoteOperations: true,
     allowColumnResizing: true,
     allowColumnReordering: true,

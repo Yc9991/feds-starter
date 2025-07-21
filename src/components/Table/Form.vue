@@ -2,9 +2,7 @@
 import { DxForm, DxSimpleItem, DxGroupItem, DxButtonItem, DxValidationRule } from 'devextreme-vue/form'
 import type { TableForm } from '@/types'
 
-const { odataForm: formHelper } = useHelper()
-
-const { input } = defineProps<TableForm<T>>()
+const props =  defineProps<TableForm<T>>()
 
 const emit = defineEmits<{
     submit: [dom: Event]
@@ -19,22 +17,22 @@ const defaultInput = (key: (keyof T)): TableForm<T>['input']['custom'] => {
 
     var inputItem: InstanceType<typeof DxSimpleItem>['$props'] = {}
 
-    if (!input.custom?.[key]?.editorType) {
+    if (!props.input.custom?.[key]?.editorType) {
 
         var editorType: InstanceType<typeof DxSimpleItem>['$props']['editorType'] | undefined = 'dxTextBox'
 
-        if (input.list?.[key] instanceof Date) {
+        if (props.input.list?.[key] instanceof Date) {
             editorType = 'dxDateBox'
         }
 
-        if (typeof input.list[key] === 'string') {
+        if (typeof props.input.list[key] === 'string') {
             editorType = 'dxTextBox'
         }
-        if (typeof input.list[key] === 'number') {
+        if (typeof props.input.list[key] === 'number') {
             editorType = 'dxNumberBox'
         }
 
-        if (String(input.list[key]).length >= 100) {
+        if (String(props.input.list[key]).length >= 100) {
             editorType = 'dxTextArea'
         }
 
@@ -50,19 +48,19 @@ let slotName = (key: (keyof T)): `Data_${string & keyof T}` => {
 
 
 const filterGroup = computed(() => {
-    if (input.list) {
+    if (props.input.list) {
 
         const group = Object.fromEntries(
-            Object.entries(input.list).filter(([key]) => {
-                const dataField = input.custom?.[key as keyof T]?.dataField;
-                return input.group?.some(group => group.keys?.includes(String(dataField)));
+            Object.entries(props.input.list).filter(([key]) => {
+                const dataField = props.input.custom?.[key as keyof T]?.dataField;
+                return props.input.group?.some(group => group.keys?.includes(String(dataField)));
             })
         );
 
         const notGroup = Object.fromEntries(
-            Object.entries(input.list).filter(([key]) => {
-                const dataField = input.custom?.[key as keyof T]?.dataField;
-                return !input.group?.some(group => group.keys?.includes(String(dataField)));
+            Object.entries(props.input.list).filter(([key]) => {
+                const dataField = props.input.custom?.[key as keyof T]?.dataField;
+                return !props.input.group?.some(group => group.keys?.includes(String(dataField)));
             })
         );
 

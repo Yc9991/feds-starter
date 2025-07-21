@@ -1,30 +1,18 @@
 <script setup lang="ts">
-
 import datagridConfig from '@/datas/datagrid'
-import { DxLoadPanel } from 'devextreme-vue/load-panel';
-import { staticDataExample, staticDataRegion, staticDataOrder } from '@/datas'
-import { DxDataGrid, DxSelection, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
-import { useUtils } from '@/composables/use-utils'
+import { staticDataRegion } from '@/datas'
+import { DxSelection, DxScrolling, DxPaging, DxSearchPanel } from 'devextreme-vue/data-grid'
 import type { ExampleTypes, TableForm } from '@/types';
-import { DxSimpleItem, DxValidationRule } from 'devextreme-vue/form'
-import { DxValidator, DxRequiredRule } from 'devextreme-vue/validator';
+import { DxSimpleItem } from 'devextreme-vue/form'
 
 
 const exampleStore = useExampleStore()
 
-exampleStore.fetching().get()
-exampleStore.fetching().getRegion()
-const { overrideRefTemplate } = useUtils()
-const { odataForm } = useHelper()
-
-const refDatagridExample = ref<DxDataGrid | null>(null)
-
-onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatagridExample.value))
 
 // @ts-ignore
 const tableFormOption = computed<TableForm<ExampleTypes>>(() => {
     return {
-        form: { activeStateEnabled: true },
+        form: {  },
         input: {
             list: exampleStore.dataCurrent,
             group: [
@@ -137,32 +125,28 @@ const tableFormOption = computed<TableForm<ExampleTypes>>(() => {
 
 </script>
 <template>
-    <div class="w-full overflow-hidden">
-        <TableDrawer v-model:layout="exampleStore.layout" :midColumnTitle="exampleStore.dataCurrent?.CompanyName">
-            <template #startColumn>
-                <PageExample />
-            </template>
 
-            <template #midColumn>
-                <PageExampleForm />
-            </template>
+    <div class="p-3 overflow-auto h-[80vh]">
+        <TableForm v-if="exampleStore.dataCurrent" @submit="exampleStore.fetching().submit" v-bind="tableFormOption">
+            <template #Data_Region="{ option }">
+                <DxSimpleItem v-bind="option">
+                    <!-- <DxValidationRule name="Region" type="required" message="Harus diisi!" /> -->
+                    <TableDropdown
+                        :dropdown="{ name: 'Region', valueExpr: 'RegionDescription', width: '100%', displayExpr: 'RegionDescription' }"
+                        :datagrid="({ config: datagridConfig.region, columns: staticDataRegion, dataSource: exampleStore.dataRegion })"
+                        v-model:input="exampleStore.dataCurrent.Region">
 
-            <template #midColumnButton>
-                <VBtn @click="exampleStore.layout = 'ThreeColumnsMidExpanded'" color="primary" variant="tonal">Open
-                    Column 3</VBtn>
-                <VBtn color="primary" variant="text" icon="mdi-plus"></VBtn>
-            </template>
+                        <DxSearchPanel width="100%" placeholder="Cari..." :visible="true" />
 
-            <template #endColumnButton>
-                <VBtn color="primary" variant="text" icon="mdi-information"></VBtn>
-            </template>
+                        <DxSelection mode="single" />
+                        <DxPaging :enabled="true" :page-size="10" />
+                        <DxScrolling mode="virtual" />
+                    </TableDropdown>
 
-            <template #endColumn>
-                <div class="p-3">
-                    kebuka
-                </div>
+
+                </DxSimpleItem>
             </template>
-        </TableDrawer>
+        </TableForm>
     </div>
 
 </template>

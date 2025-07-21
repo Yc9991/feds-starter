@@ -1,4 +1,5 @@
 import DataSource from 'devextreme/data/data_source';
+import datagridConfig from '@/datas/datagrid'
 import type { ExampleTypes, RegionTypes, FetchLoading } from '@/types/index'
 import type { DxDataGrid } from 'devextreme-vue/data-grid'
 import type { DxDataGridTypes } from 'devextreme-vue/data-grid'
@@ -6,6 +7,8 @@ import FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLa
 
 
 export const useExampleStore = defineStore('use-example-store', () => {
+
+    const { odataForm: formHelper } = useHelper()
 
     const data = ref<DataSource<ExampleTypes> | null>()
     const dataCurrent = ref<ExampleTypes | null>(null)
@@ -21,8 +24,10 @@ export const useExampleStore = defineStore('use-example-store', () => {
     })
 
     function rowClick(dom: DxDataGridTypes.RowDblClickEvent<ExampleTypes>) {
-        const data = dom.data
-        dataCurrent.value = JSON.parse(JSON.stringify(data))
+
+        const item = formHelper().ignoreData<ExampleTypes>({ item: dom.data, exclude: ['Orders'] })
+
+        dataCurrent.value = item as ExampleTypes
         layout.value = 'TwoColumnsStartExpanded'
     }
 
@@ -50,7 +55,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
             url: '/Customers',
             selfProxy: '/odata',
             options: {
-                key: 'UserName',
+                key: 'CustomerID',
                 requireTotalCount: true,
                 pageSize: 10,
                 paginate: true,
@@ -65,6 +70,22 @@ export const useExampleStore = defineStore('use-example-store', () => {
         }
     }
 
+    const fetchSubmit = async (event: Event) => {
+        const data = event.target as HTMLFormElement;
+
+        if (data) {
+            const result = formHelper().extractData<ExampleTypes>({ dom: data })
+
+            await formHelper().submit<ExampleTypes>({
+                url: '/odata/Customers',
+                item: result,
+                type: 'Edit',
+                datagridConfig: datagridConfig.example,
+                datagridRef: refDatagridExample.value
+            })
+        }
+    }
+
 
     let fetching = () => {
         return {
@@ -72,6 +93,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
 
                 await fetchGet()
             },
+            submit: async (event: Event) => await fetchSubmit(event),
             getRegion: async () => await fetchGetRegion()
         }
     }
