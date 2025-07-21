@@ -41,12 +41,16 @@ let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
     }
 }
 
+
+const isOpenEndLayout = computed<boolean>(() => ['End', 'Three'].find((e) => layout.value.includes(e)) ? true : false)
+
 </script>
 
 
 
 
 <template>
+
     <ui5-flexible-column-layout :layout="layout" class="bg-white">
         <div class="col" slot="startColumn">
 
@@ -63,10 +67,17 @@ let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
                 </ui5-title>
                 <div class="flex flex-row gap-3 items-center">
                     <slot name="midColumnButton" />
-                    <VBtn color="primary" variant="text" icon="mdi-arrow-expand" @click="expandDetail({ type: 'mid' })">
-                    </VBtn>
-                    <VBtn color="primary" variant="text" icon="mdi-close" @click="closeDetail({ type: 'mid' })">
-                    </VBtn>
+
+                    <ButtonKey shortcut="F" @click="expandDetail({ type: 'mid' })">
+                        <VBtn color="primary" variant="text" icon="mdi-arrow-expand"
+                            @click="expandDetail({ type: 'mid' })">
+                        </VBtn>
+                    </ButtonKey>
+
+                    <ButtonKey shortcut="escape" @click="closeDetail({ type: 'mid' })">
+                        <VBtn color="primary" variant="text" icon="mdi-close" @click="closeDetail({ type: 'mid' })">
+                        </VBtn>
+                    </ButtonKey>
                 </div>
             </div>
 
@@ -83,10 +94,17 @@ let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
 
                     <slot name="endColumnButton" />
 
-                    <VBtn color="primary" variant="text" icon="mdi-arrow-expand" @click="expandDetail({ type: 'end' })">
-                    </VBtn>
-                    <VBtn color="primary" variant="text" icon="mdi-close" @click="closeDetail({ type: 'end' })">
-                    </VBtn>
+                    <ButtonKey shortcut="F" @click="isOpenEndLayout && expandDetail({ type: 'end' })">
+
+                        <VBtn color="primary" variant="text" icon="mdi-arrow-expand"
+                            @click="expandDetail({ type: 'end' })">
+                        </VBtn>
+                    </ButtonKey>
+
+                    <ButtonKey shortcut="escape" @click="isOpenEndLayout && closeDetail({ type: 'end' })">
+                        <VBtn color="primary" variant="text" icon="mdi-close" @click="closeDetail({ type: 'end' })">
+                        </VBtn>
+                    </ButtonKey>
                 </div>
             </div>
 
