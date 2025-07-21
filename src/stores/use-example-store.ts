@@ -22,12 +22,12 @@ export const useExampleStore = defineStore('use-example-store', () => {
 
     function rowClick(dom: DxDataGridTypes.RowDblClickEvent<ExampleTypes>) {
         const data = dom.data
-        dataCurrent.value = data
+        dataCurrent.value = JSON.parse(JSON.stringify(data))
         layout.value = 'TwoColumnsStartExpanded'
     }
 
     let fetchGetRegion = async () => {
-        const {data } = await useMyFetchOData<RegionTypes[]>({
+        const { data } = await useMyFetchOData<RegionTypes[]>({
             url: '/Regions',
             type: 'data',
             selfProxy: '/odata',
@@ -72,7 +72,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
 
                 await fetchGet()
             },
-            getRegion: async () =>  await fetchGetRegion()
+            getRegion: async () => await fetchGetRegion()
         }
     }
 

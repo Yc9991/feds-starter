@@ -20,6 +20,7 @@ const datagridRef = ref<DxDataGrid | null>(null)
 let selectionChange = (dom: DxDataGridTypes.SelectionChangedEvent) => {
 
     if (dropdown.valueExpr) {
+
         //@ts-ignore
         input.value = dom.currentSelectedRowKeys[0][dropdown.valueExpr]
     }
@@ -122,7 +123,7 @@ const datagridWidth = computed(() => {
 <template>
     <div class="flex">
         <DxDropDownBox @closed="closed" @opened="opened" v-model:value="input" v-model:opened="open"
-            :input-attr="{ 'aria-label': dropdown.displayExpr }" :defer-rendering="true" :show-clear-button="true"
+            :input-attr="{ 'aria-label': dropdown.displayExpr }" :show-clear-button="true"
             :data-source="datagrid.dataSource" v-bind="dropdown" placeholder="Pilih...">
             <slot name="dropdown"></slot>
 

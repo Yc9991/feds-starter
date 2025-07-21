@@ -24,19 +24,103 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
 // @ts-ignore
 const tableFormOption = computed<TableForm<ExampleTypes>>(() => {
     return {
-        form: { colCount: 2 },
+        form: { activeStateEnabled: true },
         input: {
             list: exampleStore.dataCurrent,
-            exclude: (['Orders', 'CustomerID']),
+            group: [
+                {
+                    caption: 'Perusahaan',
+                    keys: ['CompanyName'],
+                    colCount: 6
+                },
+                {
+                    caption: 'Kontak',
+                    keys: ['ContactName', 'ContactTitle', 'Phone'],
+                    colCount: 6
+                },
+                {
+                    caption: 'Alamat',
+                    keys: ['Address', 'City', 'Region', 'PostalCode', 'Country'],
+                    colCount: 6,
+                    visibleIndex: 1
+                },
+            ],
             custom: {
+                Orders: {
+                    visible: false,
+                },
+                CustomerID: {
+                    editorOptions: {
+                        disabled: true
+                    },
+                    visibleIndex: 0
+                },
                 CompanyName: {
                     dataField: 'CompanyName',
                     label: {
                         text: 'Nama Perusahaan',
-                    }
+                    },
+                    colSpan: 6
                 },
-                Fax: {
-                    colSpan: 2,
+                ContactName: {
+                    dataField: 'ContactName',
+                    label: {
+                        text: 'Nama Kontak',
+                    },
+                    colSpan: 3
+                },
+                Phone: {
+                    dataField: 'Phone',
+                    label: {
+                        text: 'Telepon',
+                    },
+                    colSpan: 6
+                },
+                ContactTitle: {
+                    dataField: 'ContactTitle',
+                    label: {
+                        text: 'Judul Kontak',
+                    },
+                    colSpan: 3
+                },
+                Address: {
+                    dataField: 'Address',
+                    label: {
+                        text: 'Alamat',
+                    },
+                    colSpan: 6,
+                    visibleIndex: 5
+                },
+                City: {
+                    dataField: 'City',
+                    label: {
+                        text: 'Kota',
+                    },
+                    colSpan: 3
+                },
+                Region: {
+                    dataField: 'Region',
+                    label: {
+                        text: 'Region',
+                    },
+                    colSpan: 3,
+                    isRequired: true,
+                    name: 'Region',
+                    editorType: 'dxDropDownBox',
+                },
+                Country: {
+                    dataField: 'Country',
+                    label: {
+                        text: 'Negara',
+                    },
+                    colSpan: 3,
+                },
+                PostalCode: {
+                    dataField: 'PostalCode',
+                    label: {
+                        text: 'Kode Pos',
+                    },
+                    colSpan: 3
                 },
             },
             validation: {
@@ -135,46 +219,24 @@ const handleSubmit = (event: Event) => {
             <template #midColumn>
                 <div class="p-3 overflow-auto h-[80vh]">
                     <TableForm v-if="exampleStore.dataCurrent" @submit="handleSubmit" v-bind="tableFormOption">
-                        <template #Data_Region>
-                            <DxSimpleItem :isRequired="true" name="Region" data-field="Region"
-                                editorType="dxDropDownBox"
-                                :editorOptions="{ contentTemplate: 'dropDownBoxContent', dataSource: exampleStore.dataRegion, name: 'Region', valueExpr: 'RegionDescription', width: '100%', displayExpr: 'RegionDescription' }">
-
- 
+                        <template #Data_Region="{ option }">
+                            <DxSimpleItem v-bind="option">
                                 <!-- <DxValidationRule name="Region" type="required" message="Harus diisi!" /> -->
-
-                                <!-- <TableDropdown
+                                <TableDropdown
                                     :dropdown="{ name: 'Region', valueExpr: 'RegionDescription', width: '100%', displayExpr: 'RegionDescription' }"
                                     :datagrid="({ config: datagridConfig.region, columns: staticDataRegion, dataSource: exampleStore.dataRegion })"
                                     v-model:input="exampleStore.dataCurrent.Region">
 
-                                    <template #dropdown>
-                                        <DxValidator name="Region">
-                                            <DxRequiredRule message="My custom message" />
-                                        </DxValidator>
-                                    </template>
+                                    <DxSearchPanel width="100%" placeholder="Cari..." :visible="true" />
 
-
-<DxSearchPanel width="100%" placeholder="Cari..." :visible="true" />
-
-<DxSelection mode="single" />
-<DxPaging :enabled="true" :page-size="10" />
-<DxScrolling mode="virtual" />
-</TableDropdown> -->
+                                    <DxSelection mode="single" />
+                                    <DxPaging :enabled="true" :page-size="10" />
+                                    <DxScrolling mode="virtual" />
+                                </TableDropdown>
 
 
                             </DxSimpleItem>
-
-
                         </template>
-
-                        <!-- <template #dropDownBoxContent>
-                            <DxDataGrid :data-source="exampleStore.dataRegion" v-bind=" datagridConfig.region">
-                                <DxColumn v-for="col in  staticDataRegion" :key="col.dataField" v-bind="col" />
-
-                                <slot />
-                            </DxDataGrid>
-                        </template> -->
                     </TableForm>
                 </div>
             </template>

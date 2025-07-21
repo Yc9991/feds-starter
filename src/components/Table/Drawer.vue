@@ -11,7 +11,7 @@ defineProps<{
 
 useHead({
     htmlAttrs: {
-        class: () => layout.value != 'OneColumn' ? 'overflow-hidden' :  'overflow-auto'
+        class: () => layout.value != 'OneColumn' ? 'overflow-hidden' : 'overflow-auto'
     },
 })
 
@@ -79,7 +79,7 @@ let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
                 <ui5-title level="H2" class="font-bold">
                     {{ endColumnTitle }}
                 </ui5-title>
-                <div class="flex flex-row gap-3 items-center">
+                <div class="flex flex-row gap-3 items-center flex-wrap">
 
                     <slot name="endColumnButton" />
 

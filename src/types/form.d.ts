@@ -1,10 +1,9 @@
-import { DxForm, DxSimpleItem, DxValidationRule } from 'devextreme-vue/form'
+import { DxForm, DxSimpleItem, DxValidationRule, DxGroupItem } from 'devextreme-vue/form'
 
 export interface TableForm<T = Record<string, any>> {
     input: {
         list: T,
-        include?: (keyof T)[],
-        exclude?: (keyof T)[],
+        group?: (InstanceType<typeof DxGroupItem>['$props'] & { keys: (keyof K)[] })[],
         custom?: {
             [K in keyof T]?: InstanceType<typeof DxSimpleItem>['$props']
         },

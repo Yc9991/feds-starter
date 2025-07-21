@@ -130,11 +130,17 @@ export const useHelper = () => {
             | { item: T; exclude: (keyof T)[]; include?: never }
             | { item: T; include: (keyof T)[]; exclude?: never };
 
+
+
+        function deepClone<T>(obj: T): T {
+            return JSON.parse(JSON.stringify(obj)); // Safe for plain objects
+        }
+
         function ignoreData<T extends AnyObject>(options: IgnoreDataOptions<T>): Partial<T> {
             const { item } = options;
 
             if (options.exclude) {
-                const result = { ...item };
+                const result = deepClone(item)
                 for (const key of options.exclude) {
                     delete result[key];
                 }
@@ -149,7 +155,7 @@ export const useHelper = () => {
                 return result;
             }
 
-            return item;
+            return deepClone(item)
 
         }
 
