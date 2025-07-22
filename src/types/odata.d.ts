@@ -25,8 +25,8 @@ type UnwrapPath<T> =
 // 3. Extract DTO from Q-type class
 type DTO_FromQ<Q> =
     Q extends new (...args: any) => infer I
-        ? { [K in keyof Mutable<I>]: UnwrapPath<Mutable<I>[K]> }
-        : never;
+    ? { [K in keyof Mutable<I>]: UnwrapPath<Mutable<I>[K]> }
+    : never;
 
 // 4. Allow override for navigation collections
 export type OdataMapTypes<
@@ -38,7 +38,7 @@ export type OdataMapTypes<
     };
 
 
-export type ExampleTypes = OdataMapTypes<typeof QCustomer, [typeof QOrder, 'Orders']>
+export type ExampleTypes = Omit<OdataMapTypes<typeof QCustomer, [typeof QOrder, 'Orders']>, 'CustomerDemographics' | 'convertFromOData' | 'convertToOData'>
 
 export type OrderTypes = OdataMapTypes<typeof QOrder, []>
 export type RegionTypes = OdataMapTypes<typeof QRegion, []>

@@ -1,144 +1,17 @@
 <script setup lang="ts">
-
-import datagridConfig from '@/datas/datagrid'
-import { DxLoadPanel } from 'devextreme-vue/load-panel';
-import { staticDataExample, staticDataRegion, staticDataOrder } from '@/datas'
-import { DxDataGrid, DxSelection, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
-import { useUtils } from '@/composables/use-utils'
-import type { ExampleTypes, TableForm } from '@/types';
-import { DxSimpleItem, DxValidationRule } from 'devextreme-vue/form'
-import { DxValidator, DxRequiredRule } from 'devextreme-vue/validator';
-
-
 const exampleStore = useExampleStore()
-
 exampleStore.fetching().get()
 exampleStore.fetching().getRegion()
-const { overrideRefTemplate } = useUtils()
-const { odataForm } = useHelper()
 
-const refDatagridExample = ref<DxDataGrid | null>(null)
-
-onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatagridExample.value))
-
-// @ts-ignore
-const tableFormOption = computed<TableForm<ExampleTypes>>(() => {
-    return {
-        form: { activeStateEnabled: true },
-        input: {
-            list: exampleStore.dataCurrent,
-            group: [
-                {
-                    caption: 'Perusahaan',
-                    keys: ['CompanyName'],
-                    colCount: 6
-                },
-                {
-                    caption: 'Kontak',
-                    keys: ['ContactName', 'ContactTitle', 'Phone'],
-                    colCount: 6
-                },
-                {
-                    caption: 'Alamat',
-                    keys: ['Address', 'City', 'Region', 'PostalCode', 'Country'],
-                    colCount: 6,
-                    visibleIndex: 1
-                },
-            ],
-            custom: {
-                Orders: {
-                    visible: false,
-                },
-                CustomerID: {
-                    editorOptions: {
-                        disabled: true
-                    },
-                    visibleIndex: 0
-                },
-                CompanyName: {
-                    dataField: 'CompanyName',
-                    label: {
-                        text: 'Nama Perusahaan',
-                    },
-                    colSpan: 6
-                },
-                ContactName: {
-                    dataField: 'ContactName',
-                    label: {
-                        text: 'Nama Kontak',
-                    },
-                    colSpan: 3
-                },
-                Phone: {
-                    dataField: 'Phone',
-                    label: {
-                        text: 'Telepon',
-                    },
-                    colSpan: 6
-                },
-                ContactTitle: {
-                    dataField: 'ContactTitle',
-                    label: {
-                        text: 'Judul Kontak',
-                    },
-                    colSpan: 3
-                },
-                Address: {
-                    dataField: 'Address',
-                    label: {
-                        text: 'Alamat',
-                    },
-                    colSpan: 6,
-                    visibleIndex: 5
-                },
-                City: {
-                    dataField: 'City',
-                    label: {
-                        text: 'Kota',
-                    },
-                    colSpan: 3
-                },
-                Region: {
-                    dataField: 'Region',
-                    label: {
-                        text: 'Region',
-                    },
-                    colSpan: 3,
-                    isRequired: true,
-                    name: 'Region',
-                    editorType: 'dxDropDownBox',
-                },
-                Country: {
-                    dataField: 'Country',
-                    label: {
-                        text: 'Negara',
-                    },
-                    colSpan: 3,
-                },
-                PostalCode: {
-                    dataField: 'PostalCode',
-                    label: {
-                        text: 'Kode Pos',
-                    },
-                    colSpan: 3
-                },
-            },
-            validation: {
-                CompanyName: {
-                    type: 'required',
-                    message: 'Nama Perusahaan harus diisi'
-                }
-            }
-
-        }
-    }
-})
-
+let openColumn3 = () => {
+    exampleStore.layout = 'ThreeColumnsMidExpanded'
+}
 
 </script>
 <template>
     <div class="w-full overflow-hidden">
-        <TableDrawer v-model:layout="exampleStore.layout" :midColumnTitle="exampleStore.dataCurrent?.CompanyName">
+        <TableDrawer @beforeClose="exampleStore.resetData" v-model:layout="exampleStore.layout"
+            :midColumnTitle="exampleStore.dataCurrent?.CompanyName">
             <template #startColumn>
                 <PageExample />
             </template>
@@ -148,9 +21,8 @@ const tableFormOption = computed<TableForm<ExampleTypes>>(() => {
             </template>
 
             <template #midColumnButton>
-                <VBtn @click="exampleStore.layout = 'ThreeColumnsMidExpanded'" color="primary" variant="tonal">Open
+                <VBtn @click="openColumn3()" color="primary" variant="tonal">Open
                     Column 3</VBtn>
-                <VBtn color="primary" variant="text" icon="mdi-plus"></VBtn>
             </template>
 
             <template #endColumnButton>
@@ -159,7 +31,10 @@ const tableFormOption = computed<TableForm<ExampleTypes>>(() => {
 
             <template #endColumn>
                 <div class="p-3">
-                    kebuka
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime molestiae voluptatum nemo natus?
+                    Sunt libero eveniet atque. Vitae dolores ipsa quibusdam quis totam vel id reprehenderit distinctio
+                    dolore nesciunt earum, incidunt voluptas? Non earum sit ullam distinctio labore dolorem corporis
+                    voluptatibus nobis illo, ipsam et.
                 </div>
             </template>
         </TableDrawer>

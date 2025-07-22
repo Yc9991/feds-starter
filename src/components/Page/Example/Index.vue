@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 import datagridConfig from '@/datas/datagrid'
-import { DxLoadPanel } from 'devextreme-vue/load-panel';
+// import { DxLoadPanel } from 'devextreme-vue/load-panel';
 import { staticDataExample, staticDataRegion, staticDataOrder } from '@/datas'
-import { DxDataGrid, DxSelection, DxScrolling, DxMasterDetail, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
+import { DxDataGrid, DxSelection, DxScrolling, DxMasterDetail, DxToolbar, DxItem, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
 import { useUtils } from '@/composables/use-utils'
 
 const exampleStore = useExampleStore()
@@ -18,16 +18,24 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
 
 </script>
 <template>
-
     <div class="px-3">
-
         <!-- <DxLoadPanel :position="{ of: '#datagrid-example' }" v-model:visible="exampleStore.loading.get"
                         shading-color="rgba(0,0,0,0.2)" /> -->
-
-
-        <DxDataGrid id="datagrid-example" @rowDblClick="exampleStore.rowClick" ref="refDatagridExample"
+        <DxDataGrid id="datagrid-example" @rowDblClick="exampleStore.openEdit" ref="refDatagridExample"
             :data-source="exampleStore.data" v-bind="datagridConfig.example">
             <DxColumn v-for="col in staticDataExample" :key="col.dataField" v-bind="col" />
+
+
+            <DxToolbar>
+                <DxItem name="groupPanel" />
+                <DxItem location="after" template="addButton" />
+                <DxItem name="searchPanel" />
+                <DxItem name="columnChooserButton" />
+            </DxToolbar>
+
+            <template #addButton>
+                <VBtn @click="exampleStore.openAdd()" color="primary" variant="text" icon="mdi-plus"></VBtn>
+            </template>
 
             <DxMasterDetail :enabled="true" template="masterDetailTemplate" />
 

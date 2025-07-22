@@ -2,7 +2,7 @@
 import { DxForm, DxSimpleItem, DxGroupItem, DxButtonItem, DxValidationRule } from 'devextreme-vue/form'
 import type { TableForm } from '@/types'
 
-const props =  defineProps<TableForm<T>>()
+const props = defineProps<TableForm<T>>()
 
 const emit = defineEmits<{
     submit: [dom: Event]
@@ -77,47 +77,50 @@ const filterGroup = computed(() => {
 })
 </script>
 <template>
-
-
-
     <form @submit.prevent="submit" class="relative">
-        <DxForm v-bind="form" :form-data="input.list" v-if="input.list" >
+        <DxForm v-bind="form" :form-data="input.list" v-if="input.list">
             <!-- @vue-ignore -->
 
             <DxGroupItem v-for="val in input?.group" :key="val?.caption" v-bind="val">
 
-                <template v-for="(value, key) in filterGroup.group" :key="key">
+                <template v-for="(value, key) in filterGroup.group" :key="`${val?.caption}${key}`">
+
+
                     <template v-if="val.keys.includes(key)">
 
-                        <slot v-if="$slots[slotName(key as keyof T)]" :name="slotName(key as keyof T)"
-                            :option="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }" />
-                        <DxSimpleItem v-else :data-field="String(key)"
-                            v-bind="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }">
-                            <DxValidationRule v-if="input.validation?.hasOwnProperty(key as keyof T)"
-                                v-bind="input.validation?.[key as keyof T]" />
-                        </DxSimpleItem>
-                    </template>
+                        <template v-if="$slots">
 
+                            <slot v-if="$slots[slotName(key as keyof T)]" :name="slotName(key as keyof T)"
+                                :option="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }" />
+                            <DxSimpleItem v-else :data-field="String(key)"
+                                v-bind="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }">
+                                <DxValidationRule v-if="input.validation?.hasOwnProperty(key as keyof T)"
+                                    v-bind="input.validation?.[key as keyof T]" />
+                            </DxSimpleItem>
+
+                        </template>
+
+                    </template>
                 </template>
             </DxGroupItem>
 
-
-
             <template v-for="(value, key) in filterGroup.notGroup" :key="key">
-                <slot v-if="$slots[slotName(key as keyof T)]" :name="slotName(key as keyof T)"
-                    :option="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }" />
-                <DxSimpleItem v-else :data-field="String(key)"
-                    v-bind="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }">
-                    <DxValidationRule v-if="input.validation?.hasOwnProperty(key as keyof T)"
-                        v-bind="input.validation?.[key as keyof T]" />
+                <template v-if="$slots">
+                    <slot v-if="$slots[slotName(key as keyof T)]" :name="slotName(key as keyof T)"
+                        :option="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }" />
+                    <DxSimpleItem v-else :data-field="String(key)"
+                        v-bind="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }">
+                        <DxValidationRule v-if="input.validation?.hasOwnProperty(key as keyof T)"
+                            v-bind="input.validation?.[key as keyof T]" />
+                    </DxSimpleItem>
+                </template>
 
-                </DxSimpleItem>
             </template>
 
             <!-- <slot /> -->
 
             <!-- @vue-ignore -->
-            <DxGroupItem :col-span="form?.colCount">
+            <DxGroupItem>
                 <DxButtonItem :button-options="{
                     text: 'Simpan', icon: 'save', useSubmitBehavior: true
                 }" />

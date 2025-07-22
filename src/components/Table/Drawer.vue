@@ -9,6 +9,14 @@ defineProps<{
     endColumnTitle?: string
 }>()
 
+
+const emit = defineEmits<{
+    beforeExpand: [type: 'mid' | 'end'],
+    beforeClose: [type: 'mid' | 'end'],
+    afterExpand: [type: 'mid' | 'end'],
+    afterClose: [type: 'mid' | 'end']
+}>()
+
 useHead({
     htmlAttrs: {
         class: () => layout.value != 'OneColumn' ? 'overflow-hidden' : 'overflow-auto'
@@ -17,6 +25,9 @@ useHead({
 
 
 let expandDetail = ({ type }: { type: 'end' | 'mid' }) => {
+
+    emit('beforeExpand', type)
+
     const full = type == 'mid' ? 'MidColumnFullScreen' : 'EndColumnFullScreen'
     const expaned = type == 'mid' ? 'TwoColumnsMidExpanded' : 'ThreeColumnsEndExpanded'
 
@@ -25,9 +36,14 @@ let expandDetail = ({ type }: { type: 'end' | 'mid' }) => {
     } else {
         layout.value = full
     }
+
+    emit('afterExpand', type)
 }
 
 let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
+
+    emit('beforeClose', type)
+    
     const logic = type == 'mid' ? ['MidColumnFullScreen', 'TwoColumnsMidExpanded', 'TwoColumnsStartExpanded', 'TwoColumnsEndExpanded'] :
         ['EndColumnFullScreen', 'ThreeColumnsMidExpanded', 'ThreeColumnsStartExpanded', 'ThreeColumnsEndExpanded']
 
@@ -39,6 +55,8 @@ let closeDetail = ({ type }: { type: 'end' | 'mid' }) => {
             layout.value = 'TwoColumnsStartExpanded'
         }
     }
+
+    emit('afterClose', type)
 }
 
 
