@@ -1,5 +1,4 @@
 import type { Col, DataGrid } from '@/types'
-import DataSource from 'devextreme/data/data_source';
 import { DxDataGrid } from 'devextreme-vue/data-grid'
 
 

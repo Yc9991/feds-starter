@@ -79,17 +79,12 @@ const filterGroup = computed(() => {
 <template>
     <form @submit.prevent="submit" class="relative">
         <DxForm v-bind="form" :form-data="input.list" v-if="input.list">
-            <!-- @vue-ignore -->
 
             <DxGroupItem v-for="val in input?.group" :key="val?.caption" v-bind="val">
-
+                <!-- @vue-ignore -->
                 <template v-for="(value, key) in filterGroup.group" :key="`${val?.caption}${key}`">
-
-
                     <template v-if="val.keys.includes(key)">
-
                         <template v-if="$slots">
-
                             <slot v-if="$slots[slotName(key as keyof T)]" :name="slotName(key as keyof T)"
                                 :option="{ ...input.custom?.[key as keyof T], ...defaultInput(key as keyof T) }" />
                             <DxSimpleItem v-else :data-field="String(key)"
@@ -103,7 +98,7 @@ const filterGroup = computed(() => {
                     </template>
                 </template>
             </DxGroupItem>
-
+            <!-- @vue-ignore -->
             <template v-for="(value, key) in filterGroup.notGroup" :key="key">
                 <template v-if="$slots">
                     <slot v-if="$slots[slotName(key as keyof T)]" :name="slotName(key as keyof T)"

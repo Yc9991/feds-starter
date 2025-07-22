@@ -66,6 +66,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
                     Orders: {
                         visible: false,
                     },
+
                     CustomerID: {
                         editorOptions: {
                             disabled: true
@@ -213,7 +214,7 @@ export const useExampleStore = defineStore('use-example-store', () => {
         const data = event.target as HTMLFormElement;
 
         if (data) {
-            const extractedData = formHelper().extractData<ExampleTypes>({ dom: data })
+            // const extractedData = formHelper().extractData<ExampleTypes>({ dom: data })
 
             if (formType.value == 'Add') {
 
