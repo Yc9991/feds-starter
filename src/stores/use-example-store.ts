@@ -252,7 +252,11 @@ export const useExampleStore = defineStore('use-example-store', () => {
         const data = event.target as HTMLFormElement;
 
         if (data) {
-            // const extractedData = formHelper().extractData<ExampleTypes>({ dom: data })
+            const extractedData = formHelper().extractData<ExampleTypes>({ dom: data })
+
+            console.log(extractedData)
+
+
 
             if (formType.value == 'Add') {
 
