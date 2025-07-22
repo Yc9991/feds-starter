@@ -36,7 +36,7 @@ const region: DataGrid = {
     columnResizingMode: 'widget',
     focusedRowEnabled: true,
     autoNavigateToFocusedRow: true,
-    width: '200px'
+    width: '300px'
 }
 
 const config = {
