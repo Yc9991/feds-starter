@@ -1,4 +1,5 @@
 import DataSource from 'devextreme/data/data_source';
+import notify from 'devextreme/ui/notify';
 // import datagridConfig from '@/datas/datagrid'
 import type { ExampleTypes, RegionTypes, FetchLoading, TableForm } from '@/types/index'
 import type { DxDataGrid } from 'devextreme-vue/data-grid'
@@ -8,7 +9,8 @@ import FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLa
 
 export const useExampleStore = defineStore('use-example-store', () => {
 
-    const { odataForm: formHelper } = useHelper()
+
+    const { odataForm: formHelper, confirmPopup } = useHelper()
 
     const data = ref<DataSource<ExampleTypes> | null>()
     const dataCurrent = ref<ExampleTypes | null>(null)
@@ -171,6 +173,30 @@ export const useExampleStore = defineStore('use-example-store', () => {
         layout.value = 'TwoColumnsStartExpanded'
     }
 
+    let fetchDelete = async (dom: DxDataGridTypes.RowRemovingEvent<ExampleTypes>) => {
+
+        dom.cancel = true
+
+        const result = await confirmPopup('Apa Anda yakin ingin menghapus data?');
+        if (!result) return;
+
+        try {
+            // the current data based on dom
+            // const data = dom.data
+
+            //do fetch api to delete here
+
+            //after deleting data success un-cancel the delete
+            // dom.cancel = false
+
+            notify({ message: 'Deleted successfully', type: 'success' });
+        } catch (err) {
+            notify({ message: 'Failed to delete', type: 'error' });
+            console.error(err);
+        }
+
+    }
+
     let fetchGetRegion = async () => {
         const { data } = await useMyFetchOData<RegionTypes[]>({
             url: '/Regions',
@@ -239,11 +265,9 @@ export const useExampleStore = defineStore('use-example-store', () => {
 
     let fetching = () => {
         return {
-            get: async () => {
-
-                await fetchGet()
-            },
-            submit: async (event: Event) => await fetchSubmit(event),
+            get: async () => await fetchGet(),
+            delete: async (dom: DxDataGridTypes.RowRemovingEvent) => await fetchDelete(dom),
+            submit: async (dom: Event) => await fetchSubmit(dom),
             getRegion: async () => await fetchGetRegion()
         }
     }

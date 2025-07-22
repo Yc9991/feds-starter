@@ -9,7 +9,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ButtonKey: typeof import('./components/Button/Key.vue')['default']
-    ButtonWrap: typeof import('./components/Button/Key.vue')['default']
     ModalPopup: typeof import('./components/Modal/Popup.vue')['default']
     PageExample: typeof import('./components/Page/Example/Index.vue')['default']
     PageExampleForm: typeof import('./components/Page/Example/Form.vue')['default']

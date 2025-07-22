@@ -1,9 +1,8 @@
 <script setup lang="ts">
-
-import datagridConfig from '@/datas/datagrid'
 // import { DxLoadPanel } from 'devextreme-vue/load-panel';
+import datagridConfig from '@/datas/datagrid'
 import { staticDataExample, staticDataRegion, staticDataOrder } from '@/datas'
-import { DxDataGrid, DxSelection, DxScrolling, DxMasterDetail, DxToolbar, DxItem, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
+import { DxDataGrid, DxColumnFixing, DxEditing, DxSelection, DxScrolling, DxMasterDetail, DxToolbar, DxItem, DxHeaderFilter, DxPager, DxPaging, DxSearch, DxSorting, DxColumn, DxSearchPanel, DxGrouping, DxGroupPanel } from 'devextreme-vue/data-grid'
 import { useUtils } from '@/composables/use-utils'
 
 const exampleStore = useExampleStore()
@@ -21,10 +20,10 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
     <div class="px-3">
         <!-- <DxLoadPanel :position="{ of: '#datagrid-example' }" v-model:visible="exampleStore.loading.get"
                         shading-color="rgba(0,0,0,0.2)" /> -->
-        <DxDataGrid id="datagrid-example" @rowDblClick="exampleStore.openEdit" ref="refDatagridExample"
-            :data-source="exampleStore.data" v-bind="datagridConfig.example">
+        <DxDataGrid @row-removing="exampleStore.fetching().delete" id="datagrid-example"
+            @rowDblClick="exampleStore.openEdit" ref="refDatagridExample" :data-source="exampleStore.data"
+            v-bind="datagridConfig.example">
             <DxColumn v-for="col in staticDataExample" :key="col.dataField" v-bind="col" />
-
 
             <DxToolbar>
                 <DxItem name="groupPanel" />
@@ -78,6 +77,9 @@ onMounted(() => overrideRefTemplate(exampleStore, 'refDatagridExample', refDatag
                 </v-timeline>
             </template>
 
+            <DxColumnFixing :enabled="true" />
+            <DxEditing :confirmDelete="false" :allow-updating="false" :allow-deleting="true" :allow-adding="false"
+                mode="row" />
             <DxSearchPanel placeholder="Cari..." :visible="true" />
             <DxGroupPanel :visible="true" />
             <DxGrouping :auto-expand-all="true" />

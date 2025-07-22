@@ -86,6 +86,7 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         caption: 'Fax',
         dataType: 'string',
     },
+    
 ]
 
 

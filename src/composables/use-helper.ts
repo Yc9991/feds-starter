@@ -1,5 +1,6 @@
 import type { Col, DataGrid } from '@/types'
 import { DxDataGrid } from 'devextreme-vue/data-grid'
+import { confirm } from 'devextreme/ui/dialog';
 
 
 
@@ -226,6 +227,7 @@ export const useHelper = () => {
 
 
 
+
         return {
             extractData,
             ignoreData,
@@ -233,7 +235,16 @@ export const useHelper = () => {
         }
     }
 
+    function confirmPopup(message: string): Promise<boolean> {
+        return new Promise((resolve) => {
+            confirm(message, 'Confirm').then((dialogResult) => {
+                resolve(dialogResult); // true = OK, false = Cancel
+            });
+        });
+    }
+
     return {
+        confirmPopup,
         odataForm,
         createGroupTemplate,
         isJSONString,
