@@ -189,6 +189,9 @@ export const useExampleStore = defineStore('use-example-store', () => {
             //after deleting data success un-cancel the delete
             // dom.cancel = false
 
+            //make sure to refresh datagrid after request
+            // if (refDatagridExample.value) refDatagridExample.value.instance?.refresh();
+
             notify({ message: 'Deleted successfully', type: 'success' });
         } catch (err) {
             notify({ message: 'Failed to delete', type: 'error' });
@@ -245,20 +248,29 @@ export const useExampleStore = defineStore('use-example-store', () => {
             if (formType.value == 'Add') {
 
                 //Call fetch add here
+
+
+                //make sure to refresh datagrid after request
+                // if (refDatagridExample.value) refDatagridExample.value.instance?.refresh();
             }
 
             if (formType.value == 'Edit') {
 
                 //Call fetch add here
+
+                //WIP
+                // await formHelper().submit<ExampleTypes>({
+                //     url: '/odata/Customers',
+                //     item: extractedData,
+                //     type: 'Edit',
+                //     datagridConfig: datagridConfig.example,
+                //     datagridRef: refDatagridExample.value
+                // })
+
+                //make sure to refresh datagrid after request
+                // if (refDatagridExample.value) refDatagridExample.value.instance?.refresh();
             }
 
-            // await formHelper().submit<ExampleTypes>({
-            //     url: '/odata/Customers',
-            //     item: extractedData,
-            //     type: 'Edit',
-            //     datagridConfig: datagridConfig.example,
-            //     datagridRef: refDatagridExample.value
-            // })
         }
     }
 
