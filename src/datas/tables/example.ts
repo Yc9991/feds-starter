@@ -67,11 +67,6 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         dataType: 'string',
     },
     {
-        dataField: 'ContactName',
-        caption: 'Contact Name',
-        dataType: 'string',
-    },
-    {
         dataField: 'ContactTitle',
         caption: 'Contact Title',
         dataType: 'string',
@@ -86,7 +81,7 @@ export const ExampleCol: Col<ExampleTypes>[] = [
         caption: 'Fax',
         dataType: 'string',
     },
-    
+
 ]
 
 
