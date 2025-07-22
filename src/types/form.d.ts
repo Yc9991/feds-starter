@@ -2,6 +2,7 @@ import { DxForm, DxSimpleItem, DxValidationRule, DxGroupItem } from 'devextreme-
 
 export interface TableForm<T = Record<string, any>> {
     input: {
+        schema?: any, 
         list: T,
         group?: (InstanceType<typeof DxGroupItem>['$props'] & { keys: (keyof K)[] })[],
         custom?: {

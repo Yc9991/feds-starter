@@ -1,17 +1,13 @@
 <script setup lang="ts" generic="T">
 import { DxForm, DxSimpleItem, DxGroupItem, DxButtonItem, DxValidationRule } from 'devextreme-vue/form'
+
 import type { TableForm } from '@/types'
 
 const props = defineProps<TableForm<T>>()
-
+const { odataForm, validateAllSchema, clearSchemaValidation, validateAllSchemaCheck } = useHelper()
 const emit = defineEmits<{
     submit: [dom: Event]
 }>()
-
-let submit = (dom: Event) => {
-    emit('submit', dom)
-}
-
 
 const defaultInput = (key: (keyof T)): TableForm<T>['input']['custom'] => {
 
@@ -46,10 +42,8 @@ let slotName = (key: (keyof T)): `Data_${string & keyof T}` => {
     return `Data_${String(key)}` as `Data_${string & keyof T}`
 }
 
-
 const filterGroup = computed(() => {
     if (props.input.list) {
-
         const group = Object.fromEntries(
             Object.entries(props.input.list).filter(([key]) => {
                 const dataField = props.input.custom?.[key as keyof T]?.dataField;
@@ -75,10 +69,118 @@ const filterGroup = computed(() => {
         group: null
     }
 })
+
+const dxForm = ref<DxForm | null>(null)
+const errorRef = ref<Record<string, { valid: boolean, message: string }>>({})
+
+function setCustomError({ errors }: { errors: { dataField: string; message: string }[] }) {
+    const formEl = dxForm.value?.instance?.element()
+    if (!formEl) return
+
+    for (const { dataField, message } of errors) {
+        const inputEl = formEl.querySelector(`input[name="${dataField}"]`)
+        if (!inputEl) {
+            console.warn(`Input with name="${dataField}" not found`)
+            continue
+        }
+
+        const itemContainer = inputEl.closest('.dx-field-item')
+        if (!itemContainer) {
+            console.warn(`Container for ${dataField} not found`)
+            continue
+        }
+
+        const editorEl = itemContainer.querySelector('.dx-texteditor, .dx-dropdowneditor, .dx-selectbox')
+        if (!editorEl) {
+            console.warn(`Editor for ${dataField} not found`)
+            continue
+        }
+
+        editorEl.classList.add('dx-invalid')
+
+        // Remove previous error message if exists
+        itemContainer.querySelector('.dx-invalid-message')?.remove()
+
+        const errorMessage = document.createElement('div')
+        errorMessage.className = 'dx-invalid-message dx-overlay'
+        errorMessage.innerText = message
+        itemContainer.appendChild(errorMessage)
+    }
+}
+
+let validate = async (dom: Event) => {
+    const formInstance = dxForm.value?.instance
+    if (formInstance) {
+
+
+
+        const schemaKeys = Object.keys(props.input.schema.fields)
+        const data = dom.target as HTMLFormElement;
+        const extractedData = odataForm().extractData<T>({ dom: data }) as any
+
+        const input = schemaKeys.reduce((acc, key) => {
+            acc[key] = extractedData[key];
+            return acc;
+        }, {} as Record<string, string>)
+
+        const error = schemaKeys.reduce((acc, key) => {
+            acc[key] = { valid: false, message: '' };
+            return acc;
+        }, {} as Record<string, { valid: boolean, message: string }>)
+
+        errorRef.value = error
+
+
+        // @ts-ignore
+        await validateAllSchema({ schema: props.input.schema, input: input, error: errorRef.value }, async () => {
+            clearSchemaValidation({ error: errorRef })
+            clearCustomError(schemaKeys)
+
+            emit('submit', dom)
+        })
+
+        if (validateAllSchemaCheck(errorRef.value)) {
+            setCustomError({ errors: convertErrorMapToArray(errorRef.value) })
+
+        }
+    }
+}
+
+function clearCustomError(dataFields?: string[]) {
+    const formEl = dxForm.value?.instance?.element()
+    if (!formEl) return
+
+    const inputs = dataFields?.length
+        ? dataFields.flatMap((field) => Array.from(formEl.querySelectorAll(`input[name="${field}"]`)))
+        : Array.from(formEl.querySelectorAll(`input[name]`))
+
+    for (const inputEl of inputs) {
+        const itemContainer = inputEl.closest('.dx-field-item')
+        const editorEl = itemContainer?.querySelector('.dx-texteditor, .dx-dropdowneditor, .dx-selectbox')
+
+        editorEl?.classList.remove('dx-invalid')
+        itemContainer?.querySelector('.dx-invalid-message')?.remove()
+    }
+}
+
+
+function convertErrorMapToArray(
+    errorMap: Record<string, { valid: boolean; message?: string }>
+): { dataField: string; message: string }[] {
+    return Object.entries(errorMap)
+        .filter(([_, v]) => v && v.valid === false)
+        .map(([dataField, v]) => {
+            return {
+                dataField,
+                message: String(v.message)
+            }
+        })
+}
+
 </script>
 <template>
-    <form @submit.prevent="submit" class="relative">
-        <DxForm v-bind="form" :form-data="input.list" v-if="input.list">
+    <form @submit.prevent="validate" class="relative">
+        <DxForm ref="dxForm" v-bind="form" :form-data="input.list" v-if="input.list">
 
             <DxGroupItem v-for="val in input?.group" :key="val?.caption" v-bind="val">
                 <!-- @vue-ignore -->

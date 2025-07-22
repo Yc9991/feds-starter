@@ -1,9 +1,10 @@
 import DataSource from 'devextreme/data/data_source';
 import notify from 'devextreme/ui/notify';
 // import datagridConfig from '@/datas/datagrid'
-import type { ExampleTypes, RegionTypes, FetchLoading, TableForm } from '@/types/index'
+import type { ExampleTypes, RegionTypes, FetchLoading, TableForm, SchemaObject } from '@/types/index'
 import type { DxDataGrid } from 'devextreme-vue/data-grid'
 import type { DxDataGridTypes } from 'devextreme-vue/data-grid'
+import * as yup from "yup"
 import FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js"
 
 
@@ -39,12 +40,16 @@ export const useExampleStore = defineStore('use-example-store', () => {
         order: false
     })
 
+    const schema = yup.object().shape<SchemaObject<Pick<ExampleTypes, 'Region'>>>({
+        Region: yup.string().required("Harus diisi!"),
+    })
 
     // @ts-ignore
     const formOption = computed<TableForm<ExampleTypes>>(() => {
         return {
-            form: {},
             input: {
+                //schema is only for custom component validation
+                schema: schema,
                 list: dataCurrent.value,
                 group: [
                     {
@@ -142,12 +147,15 @@ export const useExampleStore = defineStore('use-example-store', () => {
                         },
                         colSpan: 3
                     },
-
                 },
                 validation: {
                     CompanyName: {
                         type: 'required',
                         message: 'Nama Perusahaan harus diisi'
+                    },
+                    City: {
+                        type: 'required',
+                        message: 'Kota harus diisi'
                     }
                 }
 
@@ -232,12 +240,13 @@ export const useExampleStore = defineStore('use-example-store', () => {
                 // filter: ['Region', '=', null]
             }
         })
-
         if (dataSource) {
             data.value = dataSource
             loading.value.get = false
         }
     }
+
+
 
     const fetchSubmit = async (event: Event) => {
         const data = event.target as HTMLFormElement;
